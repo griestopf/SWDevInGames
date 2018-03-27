@@ -100,7 +100,7 @@ Faustregel:
 Weiterführende Information u.A. im Artikel 
 ["Choosing Between Class and Struct" auf MSDN](https://msdn.microsoft.com/en-us/library/ms229017(v=vs.110).aspx).
 
-> **TODO**
+> #### TODO
 >
 > - Betrachtet die [mathematischen Typen in FUSEE](https://github.com/FUSEEProjectTeam/Fusee/tree/develop/src/Math/Core)
 >   wie z.B: `float3`, `float4x4`.
@@ -123,9 +123,59 @@ Weiterführende Information u.A. im Artikel
 > - Wie sähe in beiden Fällen jeweils das Memory-Layout aus (natürlich nicht für 1 Mio. Objekte aufmalen :-))?
 
 
+## Struct & Class vermischt
+
+Es gibt ein paar Überschneidungen zwischen mit `struct` und `class` definierten Typen, die
+selten vorkommen, aber dann zu Verwirrung führen. Ohne allzutief darauf einzugehen, hier
+ein paar Sachverhalte:
+
+### Boxing und Unboxing
+
+In C# erben _alle_  Typen vom gemeinsamen Basistyp `object`, der als `class` deklariert ist.
+Das gilt allerdings auch mit `struct` definierte und andere Value-Typen.
+
+Durch diese Tatsache ist aber z.B. auch ein `int` Wert eine Instanz vom Typ `object` und kann z.B. 
+einer Variablen vom Typ `object` übergeben werden. Dazu muss aber eine Referenz auf das `int`-Objekt
+angelegt werden, was widersprüchlich ist, weil `int` als Value-Typ keine Referenzen erlaubt.
+
+Folgender Beispielcode ist gültiger C#-Code:
+
+```C#
+  int i = 42;
+  object o = i;
+  o = 43;
+  int j = (int)o;
+  Console.WriteLine("i is: " + i + "; o is: " + o + "; j is: " + j);
+```
+> #### TODO
+>
+>
+> - Führt o.s. Code aus.
+> - Lest den Abschnitt zu [Boxing und Unboxing im C# Programmierhandbuch](https://docs.microsoft.com/de-de/dotnet/csharp/programming-guide/types/boxing-and-unboxing)
+> - Zeichnet ein Memory-Diagramm vom Zustand nach der Ausführung des o.s. Code.
+
+### Überschreiben von Methoden in `struct`s
+
+Noch eigentümlicher wird die Tatsache, dass jeder mit  `struct` deklarierte Typ von `object`
+erbt, wenn man weiß (wie im folgenden Kapitel beschrieben), dass `struct` Vererbung gar
+nicht unterstützt. Streng genommen gilt, dass genau diese Vererbung erlaubt ist, weil sie
+automatisch vom Compiler erzeugt wird, allerdings darf ein Value-Typ nie als _Basisklasse_
+für weitere Typen zur Verfügung stehen. Es kann allerdings passieren und es gibt sinnvolle
+Fälle, in denen in einem `struct` einige der in `object` deklarierten Methoden überschreiben
+werden. 
+
+> #### TODO
+>
+> - Lest die Referenz-Dokumentation von 
+>   [`ValueType.Equals`](https://msdn.microsoft.com/de-de/library/2dts52z7(v=vs.110).aspx)
+>   und versucht zu verstehen, warum der _Tipp_ rät, u.U. diese Methode in eigenen `struct`s zu 
+>   überschreiben.
+
 ## Further Reading
 
 - [Eric Lippert on Stack and Heap vs Value and Reference](https://blogs.msdn.microsoft.com/ericlippert/2009/04/27/the-stack-is-an-implementation-detail-part-one/)
+
+
 
 
 

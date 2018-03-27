@@ -3,7 +3,7 @@
 ## Lernziele
 
  - Erlernen und Verstehen neuerer Sprachkonstrukte in zeitgemäßen Programmiersprachen
- - Anwendung dieser Sprachkonstrukte in medienbezogenen Anwednungen, u.A. in der OpenSource 3D-Library FUSEE, Made in
+ - Anwendung dieser Sprachkonstrukte in medienbezogenen Anwendungen, u.A. in der OpenSource 3D-Library FUSEE, Made in
    Furtwangen 
  - PROGRAMMIEREN KÖNNEN
 

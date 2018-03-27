@@ -122,32 +122,10 @@ Weiterführende Information u.A. im Artikel
 >   Test. Vergleicht die gemessenen Zeiten und erklärt die Unterschiede.
 > - Wie sähe in beiden Fällen jeweils das Memory-Layout aus (natürlich nicht für 1 Mio. Objekte aufmalen :-))?
 
-## Virtual Methoden / Late Binding / Polymorphie
 
-In C# könenn Methoden mit dem reservierten Wort `virtual` versehen werden. Damit können diese in vererbten Typen
-überschrieben werden (`mittels override`. C# implementiert auf diese Weise Polymorphie. Es steht erst zur 
-Laufzeit fest, welche Methode aufgerufen wird (die der Basisklasse oder die der geerbten Klasse). Diese hängt vom 
-Typ des Objektes ab.
+## Further Reading
 
-Bei Methoden, die nicht `virtual` sind, wird zur Compilezeit festgelegt, welche Methode aufgerufen wird. Hier hängt es
-vom Typ der Variablen (der Referenz) ab, welche Methode aufgerufen wird.
-
-> **TODO**
->
-> - Erzeugt eine Klasse `A`  mit einer Methode `DoSomething()` (NICHT virtual) und eine Klasse `B`, die von `A` erbt.
-> - Überschreibt `DoSomething()` in `B`.
-> - Erzeugt eine Referenz auf ein `A`-Objekt aber initialisiert diese mit einem `B`-Objekt und ruft die Methode auf:
->   ```C#
->   A someA = new B();
->   someA.DoSomething();
->   ```
-> - Welche Methode wird aufgerufen: `A.DoSomething()` oder `B.DoSomething()`?
-
-Um im Falle von `virtual` Methoden zur Laufzeit entscheiden zu können, welche Methode aufgerufen wird, erzeugt der
-Compiler an jedem Objekt eine so genannte "Virtual Function Table". Hier sind Verweise (Referenzen) auf die Methode 
-(siehe Delegates), die dann aufzurufen ist. Man kann virtuelle Methoden als eigene Daten-Einträge in der 
-oben eingeführten Memory-Layout-Notation eintragen.
-
+- [Eric Lippert on Stack and Heap vs Value and Reference](https://blogs.msdn.microsoft.com/ericlippert/2009/04/27/the-stack-is-an-implementation-detail-part-one/)
 
 
 

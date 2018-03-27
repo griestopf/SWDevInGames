@@ -49,7 +49,7 @@ Ein Typ A enthält bereits eine Reihe von Eigenschaften (u.a. Methoden). Eine ve
 die meisten Eigenschaften erben, allerdings müssen die Implementierungen einiger Methoden geändert werden.
 
 Die Methoden selbst sollen allerdings unter gleichem Namen und gleicher Signatur wie bisher aufgerufen
-werden können, um die neue Klasse B im selben Kontext wie die Orignal-Klasse A verwenden zu können.
+werden können, um die neue Klasse B im selben Kontext wie die Original-Klasse A verwenden zu können.
 
 ### Virtual Methoden / Late Binding
 
@@ -58,7 +58,7 @@ In C# können Methoden mit dem reservierten Wort `virtual` versehen werden. Dami
 Laufzeit fest, welche Methode aufgerufen wird (die der Basisklasse oder die der geerbten Klasse). Diese hängt vom 
 Typ des Objektes ab.
 
-Bei Methoden, die nicht `virtual` sind, wird zur Compilezeit festgelegt, welche Methode aufgerufen wird. Hier hängt es
+Bei Methoden, die nicht `virtual` sind, wird zur Compile-Zeit festgelegt, welche Methode aufgerufen wird. Hier hängt es
 vom Typ der Variablen (der Referenz) ab, welche Methode aufgerufen wird.
 
 > **TODO**

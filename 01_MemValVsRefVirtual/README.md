@@ -7,11 +7,11 @@
 Value-Variablen enthalten direkt den Wert, während Reference-Variablen eine Referenz auf die Speicherstelle
 enthalten, an der der Wert gespeichert wurde. 
 
-Grundlegede Unterschiede 
+Grundlegende Unterschiede 
 
 Aktion            | Beispielcode      |  by Value                             |  by Reference
 ------------------|-------------------|---------------------------------------|---------------------------------------
-Objekterzeugung   | `a = new T()`     | a ist untrennbar mit Objektverbunden | ein neues Objekt wird irgendwo im Speicher erzeugt und a erhält eine Referenz auf dieses Objketn 
+Objekterzeugung   | `a = new T()`     | a ist untrennbar mit Objektverbunden | ein neues Objekt wird irgendwo im Speicher erzeugt und a erhält eine Referenz auf dieses Objekte 
 Zuweisung     | `a = b`           | Wert wird kopiert               | Referenz wird kopiert, Objekt existiert nach wie vor nur ein mal
 Vergleich     | `a == b`          | Wert wird verglichen            | Meist: Referenz wird verglichen. `true` nur bei "ist das selbe Objekt" und nicht bei "hat den gleichen Wert".
 Objektzugriff | `a.xyz`           | Änderungen von Eigenschaften / Seiteneffekte wirken sich nur auf `a` aus. | Änderungen von Eigenschaften / Seiteneffekte wirken sich das durch  `a` referenzierte Objekt aus und auf alle anderen Variablen, die das selbe Objekt referenzieren.
@@ -76,10 +76,10 @@ In C# hängt es vom Datentyp ab, ob eine Variable by Value oder by Reference geh
 C/C++: Bei jeder Variable kann der Benutzer des Typs entscheiden, ob sie "by Value" oder "by Reference" 
 verwendet werden soll.
 
-JavaScript: Alle Typen sind (dynamische) Referenz-Typen, für eingebaute Typen exisit eine spezielle Operatoren-Semantik,
+JavaScript: Alle Typen sind (dynamische) Referenz-Typen, für eingebaute Typen existiert eine spezielle Operatoren-Semantik,
 die sich wie Value-Typen anfühlen.
 
-Java: Eingebaute Typen außer `String` sind Value-Typen, alles andere sind Referenz-Typen. Es gibt keine Möglickeit,
+Java: Eingebaute Typen außer `String` sind Value-Typen, alles andere sind Referenz-Typen. Es gibt keine Möglichkeit,
 eigene Datentypen "by Value" zu verwenden.
 
 

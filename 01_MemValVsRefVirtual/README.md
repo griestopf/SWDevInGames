@@ -1,6 +1,6 @@
-# X01: Memory-Layout, struct vs. class, virtual Methoden 
+# Lektion 01 Memory Layout, value vs. reference types, virtual Methoden 
 
-## Memeory Layout
+## Memory Layout
 
 ### Value-Variablen vs. Reference-Variablen
 

@@ -1,4 +1,4 @@
-# Lektion 01 Memory Layout, value vs. reference types, virtual Methoden 
+# Lektion 01 Memory Layout, value vs. reference types, Boxing
 
 ## Memory Layout
 

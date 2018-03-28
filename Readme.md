@@ -18,11 +18,15 @@
 
 ## Lektionen
 
-### [Lektion 01](01_MemValVsRefVirtual)
+### [Lektion 01](01_MemValRef)
 
  - Value vs. Reference-Typen
  - Memory-Layout zeichnen
- - Virtuelle Methoden
+ - Boxing & Unboxing
 
-### [Lektion 02](02_ClassesStructsInterfaces)
+### [Lektion 02](02_Inheritance)
+
+- Vererbung 
+- Polymorphie mit `virtual`
+- Polymorphie mit `interface`
 

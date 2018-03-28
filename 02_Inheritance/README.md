@@ -87,6 +87,17 @@ werden deklariert, um einen "Vertrag" zwischen Aufrufer und Implementierer zu sc
 einer Abstrakten Methode garantiert dem Anwender der Klasse, dass er eine Instanz eines Typs hat, der diese
 Methode implementiert - daher kann sie aufgerufen werden. 
 
+> #### TODO
+>
+> - Erzeugt eine Basisklasse `Shape2D` und fügt dieser ein paar allgemeine Eigenschaften hinzu
+>   (z.B. einen Namen).
+> - Fügt der Basisklasse eine abstrakte Methode `double CalculateArea()` hinzu.
+> - Erzeugt die Klassen `Rect` und `Circle`. Implementiert sinnvolle Eigenschaften (Länge und Breite bei `Rect`. 
+>   `Radius` bei `Circle`) und überschreibt jeweils die Methode `CalculateArea`.
+> - Referenziert jeweils eine Instanz von `Rect` und `Circle` über eine Referenz vom Typ `Shape2D`,
+>   ruft über diese Referenz die polymorphe (=vielgestaltige) Methode `CalculateArea` auf. Überzeugt
+>   Euch, dass jeweils die "passende" Methode aufgerufen wird.
+
 ## Interfaces
 
 Existieren in einer Klasse ausschließlich abstrakte Bestandteile, kann statt der Deklaration mit `class` 
@@ -96,3 +107,6 @@ eine Deklaration mit `interface` erfolgen. Interfaces haben gegenüber Klassen e
 - Auch `struct`s können Interfaces implementieren.
 - Bestandteile (Methoden) eines Interfaces sind automatisch `virtual`.
 
+> #### TODO
+>
+> - Wandelt oben implementierten abstrakten Typ `Shape2D` in ein Interface um.

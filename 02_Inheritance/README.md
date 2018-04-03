@@ -1,6 +1,6 @@
-# Lektion 02 class vs. interface, what about struct
+# Lektion 02 Classes, Structs, Interfaces
 
-## Weitere Unterschiede zwischen class und struct
+## Weitere Unterschiede zwischen `class` und `struct`
 
 Der bedeutendste Unterschied zwischen `class` und `struct` ist sicherlich, dass 
 mit `class` deklarierte Typen Referenz-Typen sind und mit `struct` deklarierte
@@ -22,7 +22,9 @@ Können Methoden enthalten    | ✓         | ✓      |
 ## Vererbung
 
 Die Möglichkeit der Vererbung macht Klassen in einigen Anwendungsfällen
-besonders interessant. Mit Vererbung können unterschiedliche objektorientierte 
+besonders interessant. Mit Vererbung können unterschiedliche 
+[objektorientierte Prinzipien](https://de.wikipedia.org/wiki/Prinzipien_objektorientierten_Designs)
+realisiert werden
 
 ## Vererbung zur Erweiterung
 
@@ -37,11 +39,13 @@ public class A
     public int SomeInt;
 }
 
-public B : A
+public class B : A
 {
     public string AnotherString;
 }
 ```
+
+Klasse `B` besitzt somit alle Eigenschaften, die `A` hat.
 
 ## Vererbung zur Polymorphie
 
@@ -110,3 +114,14 @@ eine Deklaration mit `interface` erfolgen. Interfaces haben gegenüber Klassen e
 > #### TODO
 >
 > - Wandelt oben implementierten abstrakten Typ `Shape2D` in ein Interface um.
+
+
+## Further Reading
+
+- In der Community wird oft darüber gerätselt, warum von `struct`s nicht geerbt werden kann 
+  (sie sind _sealed_),
+  insbesondere, wenn `struct`s  doch aber `interface`s implementieren können. Hier ist eine detaillierte 
+  [Erklärung von Konrad Rudolph](https://stackoverflow.com/questions/1769306/why-are-net-value-types-sealed/1769336#1769336),
+  die mit Beispielen verdeutlicht, was passieren würde, wenn die C#-Designer Vererbung bei `struct`s 
+  zugelassen hätten.
+

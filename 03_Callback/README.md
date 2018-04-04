@@ -100,6 +100,9 @@ Aufruf die Kontrolle wieder an den Aufrufer zurückgibt, muss die Callback-Metho
 des `Calculator` gespeichert werden. Zudem wurde ein zweiter Callback hinzugefügt, dem das Endergebnis
 übergeben wird. 
 
+In diesem Beispiel wird die _Nebenläufigkeit_ (Asynchronizität) verwendet, um die Notwendigkeit zu 
+demonstrieren, 
+
 
 ## Events
 
@@ -122,7 +125,7 @@ Menge an "Buchhaltungscode" implementieren:
 - Statt nur eines Callback müsste pro Ereignis eine Liste (ein Array) von Callbacks gehalten werden.
 - Es müsste sichergestellt werden, dass nur die Instanz, die ein Callback registriert, dieses auch wieder löschen darf
 - Es müsste sichergestellt werden, dass ein registriertes Callback von niemand anderem als dem Callback-Aufrufer
-  aufgerufen werden kannn.
+  aufgerufen werden kann.
 
 Für diese Zwecke gibt es in C#  _Events_. Deren Verwendung ist denkbar einfach und es werden damit alle drei o.g. 
 Forderungen implementiert.
@@ -183,7 +186,7 @@ der umgebenden Methode `Main()` geschrieben wird.
 In Fusee wird an verschiedenen Stellen von den o.g. Mechanismen Gebrauch gemacht. Ein zukünftiges 
 Einsatzgebiet werden (noch zu implementierende ) UI-Bausteine sein, die auf Benutzereingaben
 reagieren sollen. Diese können, im Falle von Benutzeraktionen, Element-spezifische Events 
-implementieren (z.B. `ButtonClicked` für UI-Buttons, `TextChanged` für Eingabefelder o.ä.
+implementieren (z.B. `ButtonClicked` für UI-Buttons, `TextChanged` für Eingabefelder o.ä.)
 
 
 ### Eingabegeräte
@@ -297,7 +300,11 @@ als `delegate` gespeichert und dann pro Pixel aufgerufen.
   [Googeln nach diesen Schlagworten](https://www.google.de/search?q=c%23+delegates+vs+java+anonymous+classes)
   bringt ein paar Beispiele.
 
-- 
+- Alle hier oben aufgeführten Code-Beispiele lassen sich als Implementierungen des 
+  [_Observer Pattern_](https://de.wikipedia.org/wiki/Beobachter_(Entwurfsmuster))
+  auffassen, einem bekannten Software-Entwurfsmuster. Die Sprachunterstützung durch die
+  `event` Syntax und die Bezeichnung _Event Listener_ stellen sogar
+  den direkten Bezug her.
 
 
 

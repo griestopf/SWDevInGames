@@ -180,10 +180,10 @@ der umgebenden Methode `Main()` geschrieben wird.
 
 ## Anwendungsbeispiele in FUSEE
 
-In Fusee wird an verschiedenen Stellen von den o.g. Mechanismen Gebrauch gemacht. Ein zukünftiges Einsatzgebiet 
-werden die (noch zu erstellenden) UI-Bausteine sein, die auf Benutzereingaben reagieren sollen. Diese können,
-im Falle von Benutzeraktionen, Element-spezifische Events implementieren (z.B. `ButtonClicked` für UI-Buttons,
-`TextChanged` für Eingabefelder o.ä.
+In Fusee wird an verschiedenen Stellen von den o.g. Mechanismen Gebrauch gemacht. Ein zukünftiges 
+Einsatzgebiet werden (noch zu implementierende ) UI-Bausteine sein, die auf Benutzereingaben
+reagieren sollen. Diese können, im Falle von Benutzeraktionen, Element-spezifische Events 
+implementieren (z.B. `ButtonClicked` für UI-Buttons, `TextChanged` für Eingabefelder o.ä.
 
 
 ### Eingabegeräte
@@ -236,7 +236,7 @@ in andere Speicherblöcke übertragen werden. Da zweidimensionale Pixeldaten zei
 eindimensionalen Speicher abgelegt werden, spielen - neben der Größe des zu übertragenden 
 rechteckigen Bereichs, sowie der (x,y)-Positionen im Quell und im Zielbild - auch noch die Höhe und Breite 
 des Quell-, sowie des Ziel-Bildes eine Rolle. Zudem soll 
-u.U. noch mit unterschiedlichen Pixelformaten in Quell- und Zielbild umgegeangen werden, also z.B. aus einem 
+u.U. noch mit unterschiedlichen Pixelformaten in Quell- und Zielbild umgegangen werden, also z.B. aus einem 
 Bild OHNE Alpha-Kanal in ein Bild MIT Alpha-Kanal kopiert werden, oder ein Teil eines Quell-Graustufenbild in
 einen bestimmten Kanal eines RGB-Zielbildes übertragen werden.
 
@@ -261,18 +261,19 @@ Das blockweise Kopieren der Zeilen kann dann erfolgen, wenn Quell- und Zielbild 
 
 Da C# optimierte Methoden zum blockweisen Kopieren von Daten im Speicher enthält, ist der Aufruf einer 
 solchen Methode dem pixelweisen Kopieren vorzuziehen - wenn es denn geht. Die Entscheidung, ob es geht, 
-steht allerdings schon mit dem gesamten Bild fest (und muss nicht pro Zeile getroffen werden).
+steht allerdings schon mit dem gesamten Bild fest (und muss nicht pro Zeile oder gar pro Pixel
+getroffen werden).
 
 Um nun zu vermeiden, dass innerhalb der Zeilen-Schleife für jede Zeile erneut eine Abfrage
 feststellt, ob Quelle und Ziel das selbe Pixelformat haben, hätte `Blt()` so implementiert werden können,
-dass zunächst diese Entscheidung getroffen wird und dann in eine von zwei untercchiedlichen 
+dass zunächst diese Entscheidung getroffen wird und dann in eine von zwei unterschiedlichen 
 Implementierungsmethoden verzweigt wird. Das hätte aber Code-Kopie (zumindest des Schleifenkopfes) bedeutet.
 
 Stattdessen wird im Schleifenrumpf zeilenweise ein in der lokalen Variable
 [`CopyLine`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Base/Common/ImageData.cs#L211)
 gespeichertes `delegate`
 aufgerufen, das den Code zum Kopieren einer Schleife enthält. Diese lokale Variable kann dann _vor_ der 
-Schleife mit der passenden Fuktionalität (blockweise oder pixelweises Kopieren einer Zeile) 
+Schleife mit der passenden Funktionalität (blockweise oder pixelweises Kopieren einer Zeile) 
 initialisiert werden.
 
 Exakt das selbe Prinzip wird verwendet, wenn festgestellt wurde, _dass_ pixelweise kopiert werden muss:
@@ -286,7 +287,17 @@ Die Entscheidung, welche Konvertierungsmethode zum Einsatz kommt, steht ebenfall
 ermittelt werden. Daher wird - ebenfalls vor dem gesamten Kopiervorgang - die für jedes Pixel
 zu verwendende Konvertierungsfunktion in der lokalen Variable
 [`CopyPixel`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Base/Common/ImageData.cs#L225)
-gespeichertes `delegate` gespeichert und dann pro Pixel aufgerufen.
+als `delegate` gespeichert und dann pro Pixel aufgerufen.
+
+## Further Reading
+
+- Der Unterschied zwischen Java's Callback-Ansatz mit Hilfe so genannte anonymer Klassen und dem 
+  Gegenentwurf von C# mit Events, Delegates und der Möglichkeit, anonymer Methoden oder Lambdas
+  wird in der Community häufig diskutiert. 
+  [Googeln nach diesen Schlagworten](https://www.google.de/search?q=c%23+delegates+vs+java+anonymous+classes)
+  bringt ein paar Beispiele.
+
+- 
 
 
 

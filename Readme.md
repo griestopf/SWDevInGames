@@ -37,3 +37,13 @@
 - Callback mit `delegate`
 - Callback mit `event`
 - Anonyme methoden, Lambdas und Events
+
+### [Lektion 04](04_Generics)
+
+- Containerklasse für `object`
+- Containerklasse mit generischem Inhalt
+- Indexer für Containerklassen
+- Enumerator mit `yield`
+
+
+

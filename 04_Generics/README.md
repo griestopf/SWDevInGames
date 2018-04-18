@@ -283,7 +283,7 @@ enthält die allgemeine Deklaration eines Indexers - hier schon mit dem generisc
 
 ## Enumerator
 
-Mit dem Indexer lassen sich nun Container bequem innerhalb von Schleifen beschreiben und auslesen, 
+Mit dem Indexer lassen sich nun Container bequem innerhalb von Schleifen beschreiben und auslesen. 
 Dazu muss die Schleife mit einer Zählvariablen konstruiert worden sein:
 
 ```C#

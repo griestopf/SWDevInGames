@@ -62,7 +62,10 @@ Um in eigenem Programmcode einen Einstieg in Reflection zu bekommen,
 benötigt man eine Instanz vom Typ `Type` die für den Datentyp, an dem 
 man interessiert ist, beschreibende Metainformationen enthält. 
 
-Es gibt zwei grundlegende Möglichkeiten, an Instanzen von `Type` zukommen.
+Es gibt drei grundlegende Möglichkeiten, an Instanzen von `Type` zukommen.
+
+1. Mit dem `typeof`-Operator erhält man die ein `Type`-Objekt
+   zu einem zur Compilezeit bekannten Typ.
 
 1. Jedes beliebige Objekt in C# kann eine Instanz von `Type` liefern,
    die den Typ des Objektes beschreibt: Auf dem Datentyp `object`

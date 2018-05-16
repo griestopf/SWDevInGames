@@ -76,7 +76,7 @@ Es gibt drei grundlegende Möglichkeiten, an Instanzen von `Type` zukommen.
    dann per Reflection inspiziert werden, indem eine Liste der
    in der Assembly definierten Typen angefordert wird:
    - Assembly Laden: 
-     [`Assembly LoadFrom(string path)`](https://msdn.microsoft.com/en-us/library/1009fa28(v=vs.110).aspx)
+     [`Assembly.LoadFrom(string path)`](https://msdn.microsoft.com/en-us/library/1009fa28(v=vs.110).aspx)
    - Liste von Typen der Assembly: 
      [`Type[] GetTypes()`](https://msdn.microsoft.com/en-us/library/system.reflection.assembly.gettypes(v=vs.110).aspx)
 
@@ -395,9 +395,72 @@ Attribtute-Klasse selbst Methoden an.
 
 ## Anwendungsbeispiel: Plug-In-Framework / Dependency Injection
 
-Eine Anwendungsmö
+Eine Anwendungsmöglichkeit von Reflection, vor allem im Zusammenhang mit Attributen,
+sind dynamische Plug-In-Frameworks. Oft lassen sich Applikationen durch Plug-Ins
+erweitern. Dafür legt die Applikation ein oder mehrere Interfaces fest, die von
+Plug-In-Autoren implementiert werden können. Die im Interface geforderten Methoden
+sind dann im Plug-In implementiert. Die Applikation kann dann von jeder 
+Plugin-Klasse eine oder mehrere Instanzen anlegen und die per Interface 
+"vertraglich gesicherten" Methoden zu gegebener Zeit aufrufen. 
 
-## Anwendungsbeispiel: Serialisierung mit Protobuf
+Allerdings muss die Applikation zur Laufzeit (meist bei Programmstart) irgendwie die 
+zur Verfügung stehenden Klassen, die im Plug-In implementiert werden, finden und
+instanziieren. Zur Compilezeit haben die Applikationsentwickler jedoch keine 
+Kenntnis über mögliche Plug-In-Klasse, daher können die Klassen nicht direkt
+referenziert und instanzieiert werden. 
+
+Hier kann Reflection helfen: Mit der `Assembly.LoadFrom`-Methode (s.o.) können
+z.B. alle .dll-Dateien, die in einem festgelegten Plug-In-Verzeichnis liegen
+zu Programmstart geladen werden und mit `GetTypes()` können alle in der DLL
+implementierten Klassen untersucht werden, z.B. daraufhin, ob diese ein 
+bestimmtes Interface implementieren, und/oder ob diese mit einem bestimmten
+Attribut annotiert wurden, und/oder ob diese eine bestimmte Methode 
+enthalten, die durch Namen, Signatur und/oder Attributierung identifiziert
+werden kann.
+
+Das Calculator-Beispiel im Verzeichnis dieser Lektion zeigt, wie das 
+funktionieren kann.
+
+Weiterführende Konzepte finden nicht nur die möglichen Komponenten (Plug-Ins),
+sondern auch die Stellen, an die mit Instanzen dieser Komponenten 
+initialisiert werden sollen (z.B. eine Liste von Operationen im Calculator)
+automatisiert über Reflection (z.B. weil an der Liste der Operatoren ein
+entsprechendes Attribut steht), darüber hinaus kann das Auffinde- und 
+Initialisierungs-Verhalten oft mit weiteren Attributen oder Attribut-Parametern
+gesteuert werden. 
+
+### Definition Dependency Injection
+Es gibt eine Reihe von Libraries, die diese Mechanik 
+bereits implementieren. Hier spricht man von Dependency-Injection-Frameworks (DI).
+Allgemein gesprochen lässt sich die Aufgabe von DI wie folgt beschreiben.
+
+Zur Start-Up-Zeit liegen eine Reihe von _Komponenten_ und eine Reihe von Konsumenten
+solcher Komponenten ohne feste Bindung vor:
+
+![Before DI](img/DepInj01.png)
+
+Durch Dependency Injection werden auf Grund der Interfaces, die einerseits von 
+den Komponenten implementiert werden, und andererseits von Konsumenten gefordert
+werden (z.B. in Properties, Methodenparametern, Konstruktor-Parametern etc.),
+gegebenenfalls präzisiert durch zusätzliche Attribute, die Verbindungen hergestellt.
+
+![DI applied](img/DepInj02.png)
+
+
+### Beispiel DI-Frameworks
+
+Bekannte Vertreter in C# / .NET sind:
+
+- `System.ComponentModel.Composition` (Leider nicht Bestandteil von .NET Core)
+  - a.k.a **MEF** (Managed Extensibility Framework). 
+  - Bildet u.A. die Plug-In-Fähigkeit von Visual Studio (IDE, nicht Code).
+- [Unity](https://github.com/unitycontainer/unity) (nicht die GameEngine)
+
+
+## Weitere Anwendungsbeispiele für Reflection
+
+- Serialisierung, z.B: mit System.SerializableAttribute oder mit mit Protobuf
+- 
 
 
 

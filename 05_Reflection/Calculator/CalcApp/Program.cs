@@ -98,7 +98,7 @@ namespace CalcApp
         static void Main(string[] args)
         {
             Calculator calc = new Calculator();
-            calc.operations = new List<IOperation>(new IOperation[] {new Plus(), new Minus(), new Mult(), new Div()});
+            calc.operations = new List<IOperation>{new Plus(), new Minus(), new Mult(), new Div()};
 
             String s;
             Console.WriteLine("Welcome to the Calculator");

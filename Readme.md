@@ -45,5 +45,11 @@
 - Indexer für Containerklassen
 - Enumerator mit `yield`
 
+### [Lektion 05](05_Reflection)
+
+- Reflection
+- Decompiler
+- Attribute
+- Dependency Injection
 
 

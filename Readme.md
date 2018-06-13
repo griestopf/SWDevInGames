@@ -52,4 +52,11 @@
 - Attribute
 - Dependency Injection
 
+### [Lektion 06](06_VisitorPattern)
+
+- Anwendungsbeispiel Szenengraph
+- Implementierung von GraphicObjects mit direktem polymorphen Rendering
+- Trennung von GraphicObjects und Traversierung sowie Traversierungs-"Grund". "Polymorphie" durch Reflection
+- "Echte" doppelte Polymorphie (Double-Dispatch)
+- Visitor-Pattern mit Reflection "done right".
 

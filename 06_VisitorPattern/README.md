@@ -55,6 +55,34 @@ Nachteilen.
 
 ## 01 - "No Visitor"
 
+Die Funktionalität, die pro Objekt beim Traversieren ausgeführt werden soll, ist polymorph direkt in den Objekt-Klassen implementiert (Cube, Sphere und Group "rendern sich selbst"). Für neue Traversierungs-"Gründe" muss jede Objektklasse mit einer neuen Methoden (`Serialize`, `Pick`, ...) erweitert werden.
+
 ## 02 - "Reflection Bad"
-  
+
+Um das eigentliche Traversieren für unterschiedliche Traversierungs-"Gründe" wiederverwendbar zu machen, wurde ein "Visitor"-Interface erzeugt. Klassen, die dieses Interface implementieren, müssen Code für jeden Objekttyp
+vorhalten, der dann beim Traversieren ausgeführt wird.  
+
+Beim Traversieren eines jeden Objektes muss dann die richtige Methode abhängig vom Objekt-Typ _und_ vom Visitor-Typ ausgewählt werden.
+
+In dieser Implementierung wird die Abhängigkeit vom Visitor-Typ durch das Visistor-Interface und die  polymporphe Implementierung verschiedener Visitor realisiert. Die Abhängigkeit vom Objekt-Typ hingegen wird 
+explizit per Reflection abgefragt. Das ist keine gute 
+Lösung, da das Traversieren z.B. beim Rendern eine 
+zeitkritische Aufgabe ist, die häufig durchgeführt wird.
+Allerdings kann mit der von C# angebotenen Polymorphie mittels virtueller Methoden, z.B. in Interfaces, nur
+jeweils die Abhängigkeit von _einem_ Typ aufgelöst werden.
+
 ## 03 - "Double Dispatch"
+
+Um den "virtual-Mechanismus" so auszudehnen, dass in die richtige Methode in Abhängigkeit von zwei "Freiheitsgraden", nämlich abhängig vom Traversierungsgrund (Visitor) _und_ vom Objekttyp, ausgewählt wird, kann das klassische Visitor-Pattern angewendet werden, das zwei Aufrufe von 
+virtuellen Methoden kaskadiert: 
+
+Beim Traversieren wird zunächst jedes Objekt durch die polymporphe Implementierung von `Accept` aufgefordert,
+den Visitor (der nur über sein Interface bekannt ist)
+"herein zu lassen". Damit wird abhängig Objekt die 
+"richtige" Methode gewählt. Innerhalb jeder Accept-Methode
+erfolgt dann der Aufruf der polymorphen Methode
+`Visit` für den jeweiligen `Visitor`, also den Traversierungsgrund. Hier wurde der Objekttyp bereits festgelegt. 
+
+Etwas komisch mutet die schneinbare Code-Wiederholung der 
+`Accept`-Methoden in den Objekt-Typ-Klassen an. Wichtig ist es, zu verstehen, dass hier die konkrete Visit-Methode für den jeweiligen Objekt-Typ bereits zur Compilezeit festgelegt ist. Um das zu verdeutlichen, kann das `Visitor`-Interface auch so deklariert werden, dass die Visit-Methoden für die unterschiedlichen Objekttypen unterschiedliche Namen bekommen (`VisitSphere`, `VisitCube`, ...).
+

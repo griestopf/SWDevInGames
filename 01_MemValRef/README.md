@@ -11,7 +11,7 @@ Grundlegende Unterschiede
 
 Aktion            | Beispielcode      |  by Value                             |  by Reference
 ------------------|-------------------|---------------------------------------|---------------------------------------
-Objekterzeugung   | `a = new T()`     | a ist untrennbar mit Objektverbunden | ein neues Objekt wird irgendwo im Speicher erzeugt und a erhält eine Referenz auf dieses Objekte 
+Objekterzeugung   | `a = new T()`     | a ist untrennbar mit Objekt verbunden | ein neues Objekt wird irgendwo im Speicher erzeugt und a erhält eine Referenz auf dieses Objekte 
 Zuweisung     | `a = b`           | Wert wird kopiert               | Referenz wird kopiert, Objekt existiert nach wie vor nur ein mal
 Vergleich     | `a == b`          | Wert wird verglichen            | Meist: Referenz wird verglichen. `true` nur bei "ist das selbe Objekt" und nicht bei "hat den gleichen Wert".
 Objektzugriff | `a.xyz`           | Änderungen von Eigenschaften / Seiteneffekte wirken sich nur auf `a` aus. | Änderungen von Eigenschaften / Seiteneffekte wirken sich das durch  `a` referenzierte Objekt aus und auf alle anderen Variablen, die das selbe Objekt referenzieren.

@@ -244,11 +244,11 @@ Bild OHNE Alpha-Kanal in ein Bild MIT Alpha-Kanal kopiert werden, oder ein Teil 
 einen bestimmten Kanal eines RGB-Zielbildes übertragen werden.
 
 In FUSEE gibt es den Datentyp 
-[`ImageData`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Base/Common/ImageData.cs#L32),
+[`ImageData`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Base/Core/ImageData.cs#L10),
 mit dem sich rechteckige Pixelbilder mit unterschiedlichen Pixelformaten realisieren lassen.
 
 Dieser Datentyp implementiert die Methode 
-[`Blt`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Base/Common/ImageData.cs#L198),
+[`Blt`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Base/Core/ImageData.cs#L64),
 die eine solche Übertragungsfunktionalität eines rechteckigen Blocks von einem `src` Image in 
 ein `dst` Image realisiert.
 
@@ -273,7 +273,7 @@ dass zunächst diese Entscheidung getroffen wird und dann in eine von zwei unter
 Implementierungsmethoden verzweigt wird. Das hätte aber Code-Kopie (zumindest des Schleifenkopfes) bedeutet.
 
 Stattdessen wird im Schleifenrumpf zeilenweise ein in der lokalen Variable
-[`CopyLine`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Base/Common/ImageData.cs#L211)
+[`copyLine`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Base/Core/ImageData.cs#L77)
 gespeichertes `delegate`
 aufgerufen, das den Code zum Kopieren einer Schleife enthält. Diese lokale Variable kann dann _vor_ der 
 Schleife mit der passenden Funktionalität (blockweise oder pixelweises Kopieren einer Zeile) 

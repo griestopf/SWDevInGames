@@ -68,11 +68,94 @@ Die `RenderAFrame()`-Methode einer FUSEE-App wird ständig in einer laufenden FU
 
 Um den Würfel nicht nur um die Y-Achse zu rotieren, sondern um alle drei Raum-Achsen und zudem den Würfel auch noch skalieren und positionieren zu können, wird üblicherweise ein Kombination unterschiedlicher Transformations-Matrizen als `RC.Model`-Matrix gesetzt:
 
+```C#
+    public override void RenderAFrame()
+    {
+        // Clear the backbuffer
+        RC.Clear(ClearFlags.Color | ClearFlags.Depth);
+
+        // Set the model matrix to turn all rendered geometry  cube model around 35°
+        RC.Model = 
+            float4x4.CreateTranslation(0.0f, 0.0f, 0.0f)
+            *   float4x4.CreateRotationY(35.0f * M.Pi / 180.0f)
+            *   float4x4.CreateRotationX(0.0f * M.Pi / 180.0f)
+            *   float4x4.CreateRotationZ(0.0f * M.Pi / 180.0f)
+            *   float4x4.CreateScale(1.0f,1.0f, 1.0f);
 
 
+        RC.Render(_mesh);
+
+        // Swap buffers: Show the contents of the backbuffer (containing the currently rendered frame) on the front buffer.
+        Present();
+    }
+```
 
 ## Mehrere Würfel
 
+Die Darstellung mehrer Würfel kann nun so erfolgen, dass das Mesh mehrfach mit unterschiedlich gesetzter `RC.Model`-Matrix gerendert wird.
+
+```C#
+    // First render Cube at x = -3
+    RC.Model = 
+        float4x4.CreateTranslation(-3.0f, 0.0f, 0.0f)
+        *   float4x4.CreateRotationY(0.0f * M.Pi / 180.0f)
+        *   float4x4.CreateRotationX(0.0f * M.Pi / 180.0f)
+        *   float4x4.CreateRotationZ(0.0f * M.Pi / 180.0f)
+        *   float4x4.CreateScale(1.0f,1.0f, 1.0f);
+
+    RC.Render(_mesh);
+
+    // Now render Cube at x = +3
+    RC.Model = 
+        float4x4.CreateTranslation( 3.0f, 0.0f, 0.0f)
+        *   float4x4.CreateRotationY(0.0f * M.Pi / 180.0f)
+        *   float4x4.CreateRotationX(0.0f * M.Pi / 180.0f)
+        *   float4x4.CreateRotationZ(0.0f * M.Pi / 180.0f)
+        *   float4x4.CreateScale(1.0f,1.0f, 1.0f);
+
+    RC.Render(_mesh);
+```
+
+
 ## Objekthierarchien
+
+Die Eigenschaften mehrerer Transformtaionen lassen sich hintereinanderschalten, in dem die Matrizen miteinander multipliziert werden:
+
+```C#
+    // Parent: Cube rotated 35° around x
+    RC.Model = 
+        float4x4.CreateTranslation(-3.0f, 0.0f, 0.0f)
+        *   float4x4.CreateRotationY(35.0f * M.Pi / 180.0f)
+        *   float4x4.CreateRotationX(0.0f * M.Pi / 180.0f)
+        *   float4x4.CreateRotationZ(0.0f * M.Pi / 180.0f)
+        *   float4x4.CreateScale(1.0f,1.0f, 1.0f);
+
+    RC.Render(_mesh);
+
+    // Child: Additionally placed 3 units above parent
+    RC.Model *= 
+        float4x4.CreateTranslation( 0.0f, 3.0f, 0.0f)
+        *   float4x4.CreateRotationY(0.0f * M.Pi / 180.0f)
+        *   float4x4.CreateRotationX(0.0f * M.Pi / 180.0f)
+        *   float4x4.CreateRotationZ(0.0f * M.Pi / 180.0f)
+        *   float4x4.CreateScale(1.0f,1.0f, 1.0f);
+
+    RC.Render(_mesh);
+```
+
+## Aufgabe
+
+Klassenbibliothek erzeugen:
+
+- `class GraphicsObject`
+    - Elternklasse
+- `class Group :  GraphicsObject`
+    - Enthält `Children`: Liste von GraphicsObject` 
+- `class Transform :  GraphicsObject`
+    - Enthält Position Rotation und Scale, jeweils als `float3` (mit x, y, z)
+- `class Mesh : GraphicsObject`
+    - Enthält ein `Mesh`
+
+Mit `Group` Instanzen lassen sich baumartige Hierarchien bauen. Diese sollen zum Rendern traversiert werden, wobei jede Instanz ihren Beitrag (mit entsprechenden Aufrufen auf `RC`) zum Gesamtbild leistet
 
 

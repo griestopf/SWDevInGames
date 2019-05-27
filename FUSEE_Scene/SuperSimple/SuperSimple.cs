@@ -31,14 +31,7 @@ namespace FuseeApp
             // Create a mesh representing a cube
             _mesh = SimpleMeshes.CreateCuboid(new float3(5, 5, 5));
 
-            // Set the model matrix to turn all rendered geometry  cube model around 35°
-            RC.Model = 
-                float4x4.CreateTranslation(0.0f, 0.0f, 0.0f)
-                *   float4x4.CreateRotationY(35.0f * M.Pi / 180.0f)
-                *   float4x4.CreateRotationX(0.0f * M.Pi / 180.0f)
-                *   float4x4.CreateRotationZ(0.0f * M.Pi / 180.0f)
-                *   float4x4.CreateScale(1.0f,1.0f, 1.0f);
-            
+         
             // Set the camera 30 units along the _negative_ z-axis. 
             // (The View matrix holds the inversion of the camera transformation, 
             // thus we apply a positive 30 Z translation).
@@ -50,6 +43,14 @@ namespace FuseeApp
         {
             // Clear the backbuffer
             RC.Clear(ClearFlags.Color | ClearFlags.Depth);
+
+            // Set the model matrix to turn all rendered geometry  cube model around 35°
+            RC.Model = 
+                float4x4.CreateTranslation(0.0f, 0.0f, 0.0f)
+                *   float4x4.CreateRotationY(35.0f * M.Pi / 180.0f)
+                *   float4x4.CreateRotationX(0.0f * M.Pi / 180.0f)
+                *   float4x4.CreateRotationZ(0.0f * M.Pi / 180.0f)
+                *   float4x4.CreateScale(1.0f,1.0f, 1.0f);
 
 
             RC.Render(_mesh);

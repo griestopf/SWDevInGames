@@ -1,4 +1,4 @@
-# Sommersemester 2019
+# Sommersemester 2020
 
 ## Lernziele
 
@@ -18,7 +18,7 @@
 
 ## Tools
 
-- [.NET Core (aktuell v. 2.2)](https://dotnet.microsoft.com/download)
+- [.NET Core (aktuell v. 3.1)](https://dotnet.microsoft.com/download)
 - [Visual Studio Code](https://code.visualstudio.com/download)
 - [C# for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp)
 - [FUSEE](http://fusee3d.org/)

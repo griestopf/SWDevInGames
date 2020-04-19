@@ -83,7 +83,7 @@ Sobald dessen Kapazität erreicht ist, wird die Anzahl der Array-Einträge verdo
     }
 ```
 
-> #### TODO
+> #### 👨‍🔧 TODO
 >
 > - Legt mehrere Instanzen der obigen Klasse für die Speicherung unterschiedlicher 
 >   Typen an, vor allem auch mit einer selbst geschriebenen Klasse.
@@ -202,7 +202,7 @@ bietet, wie z.B:
 - `T` muss ein bestimmtes Interface implementieren
 - `T` muss einen parameterlosen Konstruktor besitzen
 
-> #### TODO
+> #### 👨‍🔧 TODO
 >
 > - Erweitert die Containerklasse `MyContainer` so, dass bei Aufruf von `Add` das übergebene
 >   Objekt sortiert in den Array eingefügt wird. Dazu muss:
@@ -248,7 +248,7 @@ Elemente durch die bereits in die Sprache eingebaute Indizierungs-Schreibweise m
 In Containerklassen kann ein wahlfreier Zugriff zunächst über Methoden wie z.B. `SetAt(T o, int index)` oder
 `T GetAt(int i)` realisiert werden
 
-> ***TODO***
+> *#### 👨‍🔧 TODO*
 >
 > - Erweitert die (nicht-sortiert speichernde) Klasse `MyContainer` um die 
 >   Methode `SetAt(T o, int index)`. (`GetAt` existiert ja bereits).
@@ -270,7 +270,7 @@ enthält die allgemeine Deklaration eines Indexers - hier schon mit dem generisc
    }
 ```
 
-> ***TODO***
+> *#### 👨‍🔧 TODO*
 >
 > - Erweitert die Klasse `MyContainer` um einen Indexer nach obigem Beispiel, der in `get` die Methode `GetAt()`
 >   und in `set` die Methode `SetAt()` aufruft.
@@ -391,7 +391,7 @@ auf folgende Art enumerierbar gemacht werden
     }  
   ```
 
-> ***TODO***
+> *#### 👨‍🔧 TODO*
 >
 > - Erweitert `MyContainer` um die Enumerierbarkeit und verwendet eine
 >   `foreach`-Schleife um auf die Inhalte zuzugreifen.

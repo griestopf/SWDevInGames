@@ -65,7 +65,7 @@ Typ des Objektes ab.
 Bei Methoden, die nicht `virtual` sind, wird zur Compile-Zeit festgelegt, welche Methode aufgerufen wird. Hier hängt es
 vom Typ der Variablen (der Referenz) ab, welche Methode aufgerufen wird.
 
-> **TODO**
+> #### 👨‍🔧 TODO
 >
 > - Erzeugt eine Klasse `A`  mit einer Methode `DoSomething()` (NICHT virtual) und eine Klasse `B`, die von `A` erbt.
 > - Überschreibt `DoSomething()` in `B`.
@@ -91,7 +91,7 @@ werden deklariert, um einen "Vertrag" zwischen Aufrufer und Implementierer zu sc
 einer Abstrakten Methode garantiert dem Anwender der Klasse, dass er eine Instanz eines Typs hat, der diese
 Methode implementiert - daher kann sie aufgerufen werden. 
 
-> #### TODO
+> #### 👨‍🔧 TODO
 >
 > - Erzeugt eine Basisklasse `Shape2D` und fügt dieser ein paar allgemeine Eigenschaften hinzu
 >   (z.B. einen Namen).
@@ -111,7 +111,7 @@ eine Deklaration mit `interface` erfolgen. Interfaces haben gegenüber Klassen e
 - Auch `struct`s können Interfaces implementieren.
 - Bestandteile (Methoden) eines Interfaces sind automatisch `virtual`.
 
-> #### TODO
+> #### 👨‍🔧 TODO
 >
 > - Wandelt oben implementierten abstrakten Typ `Shape2D` in ein Interface um.
 

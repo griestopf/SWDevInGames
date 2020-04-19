@@ -5,13 +5,13 @@
 ### Value-Variablen vs. Reference-Variablen
 
 Value-Variablen enthalten direkt den Wert, während Reference-Variablen eine Referenz auf die Speicherstelle
-enthalten, an der der Wert gespeichert wurde. 
+enthalten, an der der Wert gespeichert wurde.
 
-Grundlegende Unterschiede 
+Grundlegende Unterschiede
 
 Aktion            | Beispielcode      |  by Value                             |  by Reference
 ------------------|-------------------|---------------------------------------|---------------------------------------
-Objekterzeugung   | `a = new T()`     | a ist untrennbar mit Objekt verbunden | ein neues Objekt wird irgendwo im Speicher erzeugt und a erhält eine Referenz auf dieses Objekte 
+Objekterzeugung   | `a = new T()`     | a ist untrennbar mit Objekt verbunden | ein neues Objekt wird irgendwo im Speicher erzeugt und a erhält eine Referenz auf dieses Objekte
 Zuweisung     | `a = b`           | Wert wird kopiert               | Referenz wird kopiert, Objekt existiert nach wie vor nur ein mal
 Vergleich     | `a == b`          | Wert wird verglichen            | Meist: Referenz wird verglichen. `true` nur bei "ist das selbe Objekt" und nicht bei "hat den gleichen Wert".
 Objektzugriff | `a.xyz`           | Änderungen von Eigenschaften / Seiteneffekte wirken sich nur auf `a` aus. | Änderungen von Eigenschaften / Seiteneffekte wirken sich das durch  `a` referenzierte Objekt aus und auf alle anderen Variablen, die das selbe Objekt referenzieren.
@@ -21,7 +21,7 @@ Debug-Session. Hier eine Herangehensweise:
 
 Zweispaltige Tabelle: Linke Spalte: Identifizierer (Variablen-, Klassenvariablen- od. Parametername), Rechte Spalte: Bei Value-Variablen: Wert, bei Reference-Variablen: Zeiger auf Objekt.
 
-**Beispiel**
+#### Beispiel
 
 Folgender Code
 
@@ -41,18 +41,22 @@ führt zu folgendem Memorylayout:
 
 ![Memory Layout](_images/MemLayout.png)
 
-> **TODO**
+> #### 👨‍🔧 TODO
+>
 > - Zeichnet ins Layout ein, was bei folgender Anweisung passiert:
+>
 >   ```C#
 >     p.one = 48;
 >     c.age = 6;
 >   ```
+>
 > - Wie ändern sich die Werte von `q.one` und `d.age`? 
 
 Bei Arrays, Listen oder anderen Containern wird ebenfalls ein neuer Speicherbereich angelegt, dessen linke Spalte
 durch den Index (oder das indizierende Objekt) und die rechte durch die Nutzdaten belegt werden.
 
-> **TODO**
+> #### 👨‍🔧 TODO
+>
 > - Legt jeweils einen Array von `Cat`s und `Pair`s an und zeichnet das Memory-Layout.
 
 In C# hängt es vom Datentyp ab, ob eine Variable by Value oder by Reference gehandhabt wird:
@@ -100,7 +104,7 @@ Faustregel:
 Weiterführende Information u.A. im Artikel 
 ["Choosing Between Class and Struct" auf MSDN](https://msdn.microsoft.com/en-us/library/ms229017(v=vs.110).aspx).
 
-> #### TODO
+> #### 👨‍🔧 TODO
 >
 > - Betrachtet die [mathematischen Typen in FUSEE](https://github.com/FUSEEProjectTeam/Fusee/tree/develop/src/Math/Core)
 >   wie z.B: `float3`, `float4x4`.
@@ -147,7 +151,7 @@ Folgender Beispielcode ist gültiger C#-Code:
   int j = (int)o;
   Console.WriteLine("i is: " + i + "; o is: " + o + "; j is: " + j);
 ```
-> #### TODO
+> #### 👨‍🔧 TODO
 >
 >
 > - Führt o.s. Code aus.
@@ -164,7 +168,7 @@ für weitere Typen zur Verfügung stehen. Es kann allerdings passieren und es gi
 Fälle, in denen in einem `struct` einige der in `object` deklarierten Methoden überschreiben
 werden. 
 
-> #### TODO
+> #### 👨‍🔧 TODO
 >
 > - Lest die Referenz-Dokumentation von 
 >   [`ValueType.Equals`](https://msdn.microsoft.com/de-de/library/2dts52z7(v=vs.110).aspx)

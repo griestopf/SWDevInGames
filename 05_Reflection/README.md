@@ -48,7 +48,7 @@ ist die Klasse
 Eine Instanz (ein Objekt) vom Typ `Type` bildet eine Sammlung von
 zur Laufzeit abfragbaren Meta-Informationen über einen Datentyp.
 
-> #### TODO
+> #### 👨‍🔧 TODO
 >
 > - Schaut Euch die Referenzdokumentation zu [`System.Type`](https://msdn.microsoft.com/en-us/library/system.type(v=vs.110).aspx)
 >   an und beantwortet folgende Fragen:
@@ -80,7 +80,7 @@ Es gibt drei grundlegende Möglichkeiten, an Instanzen von `Type` zukommen.
    - Liste von Typen der Assembly: 
      [`Type[] GetTypes()`](https://msdn.microsoft.com/en-us/library/system.reflection.assembly.gettypes(v=vs.110).aspx)
 
-> #### TODO
+> #### 👨‍🔧 TODO
 >
 > - Ruft auf Objekten von primitiven Datentypen (`int`, `string`)
 >   die Methode `GetType()` auf und inspiziert den Inhalt der jeweils
@@ -119,7 +119,7 @@ Typ-System-Graphen traversieren lässt.
   - `ParameterInfo`
   - `Type ParameterType`
 
-> #### TODO
+> #### 👨‍🔧 TODO
 >
 > - Schreibt eine Methode `PrintTypeInfo(object o)`, die zu einem übergebenen Objekt
 >   dessen komplette Typ-Informationen ausgibt, also u.A.
@@ -159,7 +159,7 @@ erlaubt es, die reflektierte Methode auf dem als ersten Parameter zu übergebend
 aufzurufen. Die Parameter, die an die Methode übergeben werden sollen, müssen in den `object`-
 Array (zweiter Parameter) verpackt werden.
 
-> #### TODO
+> #### 👨‍🔧 TODO
 >
 > - Experimentiert mit per Reflection ausgelösten Methoden-Aufrufen und Wert-Zuweisungen an 
 >   Felder/Properties. Erweitert z.B. die Methode `PrintTypeInfo(object o)` so, dass
@@ -259,7 +259,7 @@ als Freeware von Lutz Röder entwickelten _.NET Reflector_ ist inzwischen nur ge
 Geld erhältlich. Das Produkt _dotPeek_ von JetBrains ist immerhin in einer
 für Studenten und Hochschulen kostenlosen Version erhältlich.
 
-> #### TODO
+> #### 👨‍🔧 TODO
 >
 > - Bildet Zweiergruppen. Erzeugt jeweils eine DLL mit beliebiger Funktionalität.
 > - Tauscht die DLLs unterinander aus und findet mit dotPeek heraus, was die
@@ -387,7 +387,7 @@ Attribute können zur Laufzeit ausgelesen werden. Dazu gibt bieten sowohl die un
 beschreibenden Reflection-Klassen (Assembly, Type, MemberInfo, MethodInfo, ...) als auch die 
 Attribtute-Klasse selbst Methoden an. 
 
-> #### TODO
+> #### 👨‍🔧 TODO
 > - Lest den Artikel 
 >   [Zugriff auf Attribute mit Reflektion](https://docs.microsoft.com/de-de/dotnet/csharp/programming-guide/concepts/attributes/accessing-attributes-by-using-reflection)
 >   aus dem C#-Programmierhandbuch und vollzieht das Beispiel, ggf. mit eigenen Klassen und Attributen, nach.

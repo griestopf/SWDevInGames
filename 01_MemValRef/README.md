@@ -110,6 +110,7 @@ Weiterführende Information u.A. im Artikel
 >   wie z.B: `float3`, `float4x4`.
 > - Warum sind diese als `struct` angelegt?
 > - Betrachtet folgenden Typ
+>
 >   ```C#
 >    public struct Vertex
 >    {
@@ -117,8 +118,8 @@ Weiterführende Information u.A. im Artikel
 >       public float3 Normal;
 >       public float3 UVW;
 >    }
+>   ```
 >
->   ``` 
 > - Schreibt Beispielcode, der einen großen Array von solchen `Vertex`-Objekten  (z.B. 1 Million Objekte) anlegt,
 >   in einer Schleife mit Zufallswerten beschreibt und in einer zweiten Schleife die Werte ausliest. Messt die Zeit,
 >   die hierzu benötigt wird.
@@ -151,6 +152,7 @@ Folgender Beispielcode ist gültiger C#-Code:
   int j = (int)o;
   Console.WriteLine("i is: " + i + "; o is: " + o + "; j is: " + j);
 ```
+
 > #### 👨‍🔧 TODO
 >
 >

@@ -115,6 +115,16 @@ eine Deklaration mit `interface` erfolgen. Interfaces haben gegenüber Klassen e
 >
 > - Wandelt oben implementierten abstrakten Typ `Shape2D` in ein Interface um.
 
+## Pattern Matching
+
+Oft kommt es vor, dass man Klassen verwendet, deren Deklaration/Implementierung man nicht ändern kann, weil man eine bereits kompilierte DLL verwendet (die z. B. über [NuGet](https://www.nuget.org/) eingebunden wird). Soll eigener Code dann polymorph, also abhängig vom konkreten Typ eines Objektes, ausgeführt werden, kann man nicht einfach eine `virtual`-Methode oder ein gemeinsames Interface hinzufügen. Für diesen Anwendungsfall gibt es in C# seit Version 7.0 eine mächtige Erweiterung der `switch/case`-Anweisung, mit der man objekte auf vielerlei Bedingungen, u. a. darauf, ob sie von einem bestimmten Datentyp abgeleitet sind, überprüfen kann: Das so genannte [Pattern Matching](https://docs.microsoft.com/en-us/dotnet/csharp/pattern-matching).
+
+> #### 👨‍🔧 TODO
+>
+> - Erzeugt zwei oder mehrere konkrete Klassen, die von einer gemeinsamen Basisklasse ableiten, in der eine Methode polymorph mit `virtual` implementiert wurde. 
+> - Ruft die Methode auf unterschiedlichen Instanzen sehr oft auf und messt die Zeit.
+> - Implementiert den polymorphen Aufruf statt mit `virtual` mit Pattern Matching. Wie verhält sich dann die Laufzeit? Erklärt einen ggf. vorhandenen Unterschied.
+
 
 ## Further Reading
 
@@ -124,4 +134,8 @@ eine Deklaration mit `interface` erfolgen. Interfaces haben gegenüber Klassen e
   [Erklärung von Konrad Rudolph](https://stackoverflow.com/questions/1769306/why-are-net-value-types-sealed/1769336#1769336),
   die mit Beispielen verdeutlicht, was passieren würde, wenn die C#-Designer Vererbung bei `struct`s 
   zugelassen hätten.
+
+- Mit der Version 8 der Sprache C# wurden [Default Interface Methoden](https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-8#default-interface-methods) eingeführt. Welchen Vorteil bieten diese gegenüber virtuellen Methoden in gemeinsamen Basisklassen? 
+
+
 

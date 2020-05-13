@@ -48,7 +48,7 @@ namespace InterfaceVsPattern
         {
             /////////////////////////////////////////////////////////////////////////////////////////////
 
-            // Simple objects list
+            // List of 2D objects
             Object2D[] object2DList = new Object2D[]
             {
                 new Circle2D { Radius = 2},

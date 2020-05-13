@@ -119,6 +119,8 @@ eine Deklaration mit `interface` erfolgen. Interfaces haben gegenüber Klassen e
 
 Oft kommt es vor, dass man Klassen verwendet, deren Deklaration/Implementierung man nicht ändern kann, weil man eine bereits kompilierte DLL verwendet (die z. B. über [NuGet](https://www.nuget.org/) eingebunden wird). Soll eigener Code dann polymorph, also abhängig vom konkreten Typ eines Objektes, ausgeführt werden, kann man nicht einfach eine `virtual`-Methode oder ein gemeinsames Interface hinzufügen. Für diesen Anwendungsfall gibt es in C# seit Version 7.0 eine mächtige Erweiterung der `switch/case`-Anweisung, mit der man objekte auf vielerlei Bedingungen, u. a. darauf, ob sie von einem bestimmten Datentyp abgeleitet sind, überprüfen kann: Das so genannte [Pattern Matching](https://docs.microsoft.com/en-us/dotnet/csharp/pattern-matching).
 
+Der Beispielcode im Projekt [InterfaceVsPattern](InterfaceVsPattern/Program.cs) stellt die Ansätze "Polymorphie durch Interface" und "Polymorphie mit Pattern Matching" gegenüber.
+
 > #### 👨‍🔧 TODO
 >
 > - Erzeugt zwei oder mehrere konkrete Klassen, die von einer gemeinsamen Basisklasse ableiten, in der eine Methode polymorph mit `virtual` implementiert wurde. 

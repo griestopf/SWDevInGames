@@ -73,7 +73,6 @@ namespace X04_MyContainer_generic
             {
                 Console.WriteLine($"Element at {i}: {container.GetAt(i)}");
             }
-            Console.ReadKey();
         }
     }
 }

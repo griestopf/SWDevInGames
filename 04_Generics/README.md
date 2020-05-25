@@ -199,8 +199,9 @@ bietet, wie z.B:
 
 - `T` muss eine Klasse sein
 - `T` muss eine Struct sein
-- `T` muss ein bestimmtes Interface implementieren
+- `T` muss ein bestimmtes Interface implementieren oder von einer bestimmten Basisklasse erben
 - `T` muss einen parameterlosen Konstruktor besitzen
+- `T` muss ein nicht-nullable Typ sein
 
 > #### 👨‍🔧 TODO
 >
@@ -248,7 +249,7 @@ Elemente durch die bereits in die Sprache eingebaute Indizierungs-Schreibweise m
 In Containerklassen kann ein wahlfreier Zugriff zunächst über Methoden wie z.B. `SetAt(T o, int index)` oder
 `T GetAt(int i)` realisiert werden
 
-> *#### 👨‍🔧 TODO*
+> #### 👨‍🔧 TODO
 >
 > - Erweitert die (nicht-sortiert speichernde) Klasse `MyContainer` um die 
 >   Methode `SetAt(T o, int index)`. (`GetAt` existiert ja bereits).
@@ -270,7 +271,7 @@ enthält die allgemeine Deklaration eines Indexers - hier schon mit dem generisc
    }
 ```
 
-> *#### 👨‍🔧 TODO*
+> #### 👨‍🔧 TODO
 >
 > - Erweitert die Klasse `MyContainer` um einen Indexer nach obigem Beispiel, der in `get` die Methode `GetAt()`
 >   und in `set` die Methode `SetAt()` aufruft.
@@ -391,7 +392,7 @@ auf folgende Art enumerierbar gemacht werden
     }  
   ```
 
-> *#### 👨‍🔧 TODO*
+> #### 👨‍🔧 TODO
 >
 > - Erweitert `MyContainer` um die Enumerierbarkeit und verwendet eine
 >   `foreach`-Schleife um auf die Inhalte zuzugreifen.

@@ -252,7 +252,7 @@ In Containerklassen kann ein wahlfreier Zugriff zunächst über Methoden wie z.B
 > #### 👨‍🔧 TODO
 >
 > - Erweitert die (nicht-sortiert speichernde) Klasse `MyContainer` um die 
->   Methode `SetAt(T o, int index)`. (`GetAt` existiert ja bereits).
+>   Methode `SetAt(T o, int index)`. `GetAt` existiert ja bereits).
 
 Um selbst definierten Containern, die mit einem Index einen wahlfreien Zugriff auf die enthaltenen Elemente
 ermöglichen sollen, die gleiche elegante Eckige-Klammer-Syntax wie bei Arrays zu eröffnen, kann einer

@@ -25,7 +25,7 @@ Eine Klassenbibliothek enthält Code für eine langwieriege Berechnung. Benutzer
 sollen Benutzern im Kontext der Anwendung Auskunft geben können, wie weit die Berechnung schon fortgeschritten
 ist. Die Entwickler der Klassenbibliothek wissen aber nichts über diesen Kontext, wie z.B.
 - Läuft die Anwendung interaktiv oder als Service -> sollen Benachrichtigungen auf dem Bildschirm
-  oder in einem Log-File stattfinden
+  oder in einem Log-File stattfinden?
 - Läuft die Anwendung in einer Konsole oder in einem UI-System, wenn UI-System in welchem? -> Sollen
   Benachrichtigungen als Text-Nachricht oder als grafische Progress-Bar dargestellt werden? Wenn Progress-Bar:
   In welchem Betriebssystem / mit welcher UI-Library ist die Progress-Bar realisiert?
@@ -68,14 +68,14 @@ nur einer Methode.
 In C# wurde schon früh ein anderer Ansatz gewählt, nämlich der eher Methoden-orientierte Ansatz über 
 Delegates, bzw. Events. Hier muss noch nicht mal ein Interface (mit ggf. nur einer Methode) deklariert
 werden, sondern mit Hilfe des Schlüsselwortes `delegate` kann ein eigener Datentyp deklariert werden,
-der Methoden enthält. Ein Datentyp der Kategorie `delegate` und somit der "Vertrag" zwischen Aufrufer
+dessen Instanzen Methoden sind. Ein Datentyp der Kategorie `delegate` und somit der "Vertrag" zwischen Aufrufer
 und Aufrufendem besteht dabei nur aus der Methodensignatur, d.h. den Parametern und dem Rückgabewert. 
 Explizit NICHT festgelegt wird:
 - Methodenname
 - Zugriffs-Modus (`public`, `protected`, `private`, `internal`)
 - Klassen- oder Instanz-Methode (`static` oder nicht)
 
-Das vereinfacht ist die Implementierung einer Callback-Methode erheblich, denn Benutzer können sich 
+Das vereinfacht ist die Implementierung einer Callback-Methode erheblich, denn Entwickler können sich 
 die o.g. Eigenschaften der als Callback zu verwendenden Methode aussuchen und von Fall zu Fall
 entscheiden.
 
@@ -101,8 +101,7 @@ des `Calculator` gespeichert werden. Zudem wurde ein zweiter Callback hinzugefü
 übergeben wird. 
 
 In diesem Beispiel wird die _Nebenläufigkeit_ (Asynchronizität) verwendet, um die Notwendigkeit zu 
-demonstrieren, 
-
+demonstrieren, Callback-Methoden als Instanz-Variablen zu speichern.
 
 ## Events
 

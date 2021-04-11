@@ -105,13 +105,13 @@ demonstrieren, Callback-Methoden als Instanz-Variablen zu speichern.
 
 ## Events
 
-Im letzten Beispiel sind die beiden Callbacks für den Fortschritt und das Endergebnis als Klassenvariablen
+Im letzten Beispiel sind die beiden Callbacks für den Fortschritt und das Endergebnis als Instanz-Variablen
 der Klasse `Calculator` implementiert. Stellen wir uns ein erweitertes Szenario vor:
 
-Nicht nur eine Instanz (in unserem Fall Main), sondern zwei oder noch mehr Instanzen sollen bei Fortschritt
+Nicht nur ein Observer (in unserem Fall `ReportProgress`), sondern zwei oder noch mehr Instanzen sollen bei Fortschritt
 oder Ergebnis der Berechnung informiert werden.
 
-Beispiele für solche Szenarien sind z.B. komplexe Programme mit unterschiedlichen Views
+Beispiele für solche Szenarien sind z. B. komplexe Programme mit unterschiedlichen Views
 auf die selben zu grunde liegenden Daten: Sobald sich die Daten ändern, sollen alle Views ihre Ansichten aktualisieren.
 Die Klassen, die die Daten halten müssen also für ein bestimmtes Ereignis mehrere Callbacks unterschiedlicher
 Views aufrufen.

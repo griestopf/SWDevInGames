@@ -247,7 +247,7 @@ In FUSEE gibt es den Datentyp
 mit dem sich rechteckige Pixelbilder mit unterschiedlichen Pixelformaten realisieren lassen.
 
 Dieser Datentyp implementiert die Methode 
-[`Blt`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Base/Core/ImageData.cs#L64),
+[`Blt`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Base/Core/ImageData.cs#L107),
 die eine solche Übertragungsfunktionalität eines rechteckigen Blocks von einem `src` Image in 
 ein `dst` Image realisiert.
 

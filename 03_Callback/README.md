@@ -214,20 +214,20 @@ verschachtelten Aufrufs zweier `virtual`-Methoden (`Visit()` und `Accept()`) rea
 
 In FUSEE wurde ein anderer Weg gegangen. Die Basisklasse `SceneVisitor` hält für jeden Traversierungsgrund 
 (=Ableitungen von `SceneVisitor`) ein Dictionary von Methoden, die in der jeweiligen Ableitung mit dem Attribut
-[`[Visitor]`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Xene/SceneVisitor.cs#L16)
+[`[VisitorMethod]`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Xene/Visitor.cs#L12)
  ausgezeichnet sind. 
 
 Diese Methoden werden zu einem Initialisierungszeitpunkt zusammengesammelt und in einem 
-[Dictionary](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Xene/SceneVisitor.cs#L92)
+[Dictionary](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Xene/Visitor.cs#L95)
 nach Komponententyp indiziert eingetragen. Damit diese Methoden überhaupt als Objekte von einem 
 bestimmten Datentyp handhabbar sind, gibt es den
-[`delegate`-Datentyp `VisitComponentMethod`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Xene/SceneVisitor.cs#L21). 
+[`delegate`-Datentyp `VisitComponentMethod`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Xene/Visitor.cs#L18). 
 
 In der Methode 
-[`DoVisitComponent()`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Xene/SceneVisitor.cs#L20)
+[`DoVisitComponent()`](https://github.com/FUSEEProjectTeam/Fusee/blob/8c3a93afe8ddd1085ab151c9812c0d43fe2d29de/src/Xene/Visitor.cs#L522)
  wird dann das für den Komponententyp passende Delegate-Objekt aus dem für den Traversierungsgrund passende
 Dictionary herausgesucht und 
-[aufgerufen](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Xene/SceneVisitor.cs#L530)
+[aufgerufen](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Xene/Visitor.cs#L5410)
 
 
 ### BitBlt inner loop
@@ -274,7 +274,7 @@ Implementierungsmethoden verzweigt wird. Das hätte aber Code-Kopie (zumindest d
 Stattdessen wird im Schleifenrumpf zeilenweise ein in der lokalen Variable
 [`copyLine`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Base/Core/ImageData.cs#L77)
 gespeichertes `delegate`
-aufgerufen, das den Code zum Kopieren einer Schleife enthält. Diese lokale Variable kann dann _vor_ der 
+aufgerufen, das den Code zum Kopieren einer Zeile enthält. Diese lokale Variable kann dann _vor_ der 
 Schleife mit der passenden Funktionalität (blockweise oder pixelweises Kopieren einer Zeile) 
 initialisiert werden.
 

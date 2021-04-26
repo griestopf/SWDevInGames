@@ -18,8 +18,8 @@ In vielen Sprachen (C#, Java, C++) werden solche Konstrukte durch Verwendung von
 
 Zunächst soll die Frage geklärt werden, wo solche Konstrukte überhaupt benötigt werden. Der wohl häufigste
 Anwendungsfall, und in den meisten Sprachen auch der Grund, warum es solche Konstrukte wie Generics
-überhaupt gibt, sind so genannte [_Container-Klassen_](https://de.wikipedia.org/wiki/Container_(Informatik))
-(häufig auch _Collection-Klassen_ genannt). 
+überhaupt gibt, sind so genannte [_Container-Klassen_](https://de.wikipedia.org/wiki/Container_(Informatik)).
+Inzwischen setzt sich der Begriff _Collection-Klassen_ durch, vermutlich um Verwechslungen mit leichtgewichtigen Virtualisierungen von Rechner- (v. a. Server-)Installationen rund um Technologien wie z. B. Docker oder Kubernetes zu vermeiden. Diese Bedeutung des Begriffs _Container_ wird in dieser Lektion _nicht_ behandelt. 
 
 Dabei handelt es sich um Klassen, die in der Lage sind, Mengen von Objekten anderer Datentypen abzuspeichern.
 Typischerweise gibt es unterschiedliche Container-Klassen für unterschiedliche Speicher- und 
@@ -338,10 +338,10 @@ Implementierung:
 ```
 
 Der Umgang mit Enumeratoren ist also aus Anwendersicht durch die Compiler-Unterstützung
-mit `foreach` sehr angenehm. Aus Sicht eines Entewicklers, der seine  Container-Klasse 
-um die Enumerierbarkeit erweitern will ist es ein mittlerer Alptraum, denn
+mit `foreach` sehr angenehm. Für Entwickler, die ihre selbst implementierte Container-Klasse 
+um die Enumerierbarkeit erweitern wollen, ist es ein mittlerer Alptraum, denn
 
-- Er muss seine Container-Klasse das Interface `IEnumerable` implementieren lassen, d.h. die 
+- Sie müssen ihre Container-Klasse das Interface `IEnumerable` implementieren lassen, d.h. die 
   Methode `GetEnumerator()` hinzufügen.
 - Deren Rückgabewert muss ein neu zu erstellender Datentyp sein, der das Interface `IEnumerator` 
   implementiert. Dieser Datentyp muss implementiert werden. 
@@ -424,14 +424,14 @@ Hierarchie-Ebene gehalten werden muss.
 
 Hierzu gibt es folgende Container-Klassen:
 
-- [`StateStack<T>`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Xene/VisitorState.cs#L43)
+- [`StateStack<T>`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Xene/VisitorState.cs#L42)
   kann Instanzen beliebiger Typen als Stack speichern. Die Operation
   `Push()` kopiert den Inhalt des _Top-of-Stack_ und lässt somit den Stack um eine
   Ebene wachsen. Die Operation `Pop()` löscht den _Top-of-Stack_ und kehrt zum vorigen
   _Top-of-Stack_ zurück. Die Eigenschaft `Tos` erlaubt lesenden und schreibenden Zugriff
   auf den _Top-of-Stack_.
 
-- [`CollapsingStateStack<T>`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Xene/VisitorState.cs#L124)
+- [`CollapsingStateStack<T>`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Xene/VisitorState.cs#L131)
   bietet die gleichen Optionen wie `StateStack<T>`. Diese Implementierung eignet sich allerdings
   für Daten-Elemente mit hohem Datenvolumen, bei denen der Kopieraufwand vergleichsweise hoch ist, bei
   gleichzeitigem Einsatz in Situationen, in denen nicht in jeder Hierarchiestufe der Top-of-Stack verändert
@@ -446,7 +446,7 @@ für den Einsatz als klassisches Visitor-Pattern eine rekursive Traversierung.
 
 Soll allerdings während der Traversierung an bestimmten Nodes oder Komponenten enumerierbare Elemente
 zurückgegeben werden, kann nicht klassisches rekursives Visitor-Pattern betrieben werden.
-Hierzu implementiert die `SceneVisitor`-Klasse Bausteine, mit denen sich  
+Hierzu implementiert die `Visitor`-Klasse Bausteine, mit denen sich  
 die für das Interface `IEnumerator<T>` notwendigen Bestandteile implementieren lassen. Diese 
 Implementierung kann dann an beliebigen Stellen während der Traversierung unterbrochen werden
 und durch Wiedereinstieg (re-entrant fähig) an exakt der Stelle weiter traversieren, wo zuvor 
@@ -454,20 +454,20 @@ die Traversierung unterbrochen wurde.
  
 Diese Bausteine sind
 
-- [`EnumInit()`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Xene/SceneVisitor.cs#L238).
+- [`EnumInit()`](https://github.com/FUSEEProjectTeam/Fusee/blob/master/src/Xene/Visitor.cs#L226).
   Initialisiert die nicht-rekursive re-entrant-fähige Enumerierung
-- [`EnumMoveNext()`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Xene/SceneVisitor.cs#L262).
+- [`EnumMoveNext()`](https://github.com/FUSEEProjectTeam/Fusee/blob/master/src/Xene/Visitor.cs#L256).
   Kernstück der nicht-rekursive re-entrant-fähigen Enumerierung. Hält den aktuellen Traversierungszustand
   (Welche Node in welcher Hierarchiestufe und welche Komponente) in geeigneten Datenstrukturen und bewegt
   den Traversierungszusatand zum jeweils nächsten Objekt (Node oder Component) im Szenengraphen.
 
 Ein Beispiel für die Anwendung einer solchen Traversierung ist das Picking. Der Szenengraph soll traversiert
 werden und während der Traversierung sollals Resultat eine Enumeration von 
-[`PickResult`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Engine/Core/ScenePicker.cs#L9)-Objekten 
+[`PickResult`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Engine/Core/ScenePicker.cs#L13)-Objekten 
 entstehen (die auch gleich während der Traversierung enumerierbar sein soll).
 
 Hierzu gibt es die von `Viserator` abgeleitete Klasse 
-[`ScenePicker`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Engine/Core/ScenePicker.cs#L65),
+[`ScenePicker`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Engine/Core/ScenePicker.cs#L155),
 die als solche das `IEnumerator<PickResult>` Interface implementiert und für die dort geforderten
 Eigenschaften `Current`, `Reset()` und `MoveNext()` oben genannte Implementierungen verwendet.
 

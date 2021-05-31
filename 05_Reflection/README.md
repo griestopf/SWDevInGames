@@ -186,7 +186,7 @@ Mechanismen verwendet werden:
 
   ```C# 
   object o = ...;
-  if (a is SomeType)
+  if (o is SomeType)
   {
     Console.WriteLine("o ist vom Typ SomeType");
   }

@@ -255,7 +255,7 @@ vorhandenen Informationen lassen sich, gemeinsam mit den compilierten Anweisunge
 in der Intermediate Language, auch dazu verwenden, aus einer DLL oder einer EXE den
 ursprünglichen Source Code wieder zu rekonstruieren. Da die enthaltenen Informationen
 sehr reichhaltig sind, funktioniert das in vielen Fällen erstaunlich gut. Der ursprünglich
-als Freeware von Lutz Röder entwickelten _.NET Reflector_ ist inzwischen nur gegen
+als Freeware von Lutz Röder entwickelte _.NET Reflector_ ist inzwischen nur gegen
 Geld erhältlich. Das Produkt _dotPeek_ von JetBrains ist immerhin in einer
 für Studenten und Hochschulen kostenlosen Version erhältlich.
 
@@ -459,8 +459,8 @@ Bekannte Vertreter in C# / .NET sind:
 
 ## Weitere Anwendungsbeispiele für Reflection
 
-- Serialisierung, z.B: mit System.SerializableAttribute oder mit mit Protobuf
-- 
+- Serialisierung, z.B: mit System.SerializableAttribute oder mit mit Protobuf-Net (z. B. in FUSEE)
+- FUSEE Xirkit
 
 
 

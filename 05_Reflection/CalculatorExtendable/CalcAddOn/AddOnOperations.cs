@@ -10,7 +10,7 @@ namespace CalcAddOn
         public char Symbol => '%';
         public int Operate(int l, int r)
         {
-            return r % l;
+            return l % r;
         }
     }
 
@@ -19,7 +19,7 @@ namespace CalcAddOn
         public char Symbol => '<';
         public int Operate(int l, int r)
         {
-            return r << l;
+            return l << r;
         }
     }
 
@@ -28,7 +28,7 @@ namespace CalcAddOn
         public char Symbol => '>';
         public int Operate(int l, int r)
         {
-            return r >> l;
+            return l >> r;
         }
     }
 }

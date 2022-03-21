@@ -18,7 +18,7 @@
 
 ## Tools
 
-- [.NET SDK (aktuell v. 5.0)](https://dotnet.microsoft.com/download)
+- [.NET SDK (aktuell v.6.0)](https://dotnet.microsoft.com/download)
 - [Visual Studio Code](https://code.visualstudio.com/download)
 - [C# for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp)
 - [FUSEE](http://fusee3d.org/)

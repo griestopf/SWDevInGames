@@ -324,12 +324,15 @@ public class Image
     }
     #endregion
 
-
     #region  StreamingSIMDExtensionAccess
 
    ///////////////////////////////////////////////////////////////////////////
    // SSE (Streaming SIMD Extensions) access
    ///////////////////////////////////////////////////////////////////////////
+   // Using the SSSE3 (Supplemental Streaming SIMD Extension v3) intrinsic _mm_shuffle_epi8(__m128i a, __m128i b);
+   // See: https://www.intel.com/content/www/us/en/develop/documentation/cpp-compiler-developer-guide-and-reference/top/compiler-reference/intrinsics/intrinsics-for-ssse3/shuffle-intrinsics.html
+   // For an overview of all intel-based vector/SIMD/"Multimedia" intrinsics, see: https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html
+   // Nice: Intel Pentium MMX Campaign TV-Add from 1997: https://www.youtube.com/watch?v=5zyjSBSvqPc
 
     unsafe public void BltSse(int xSrc, int ySrc, int w, int h, Image dst, int xDst, int yDst)
     {

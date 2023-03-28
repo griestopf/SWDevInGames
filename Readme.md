@@ -47,9 +47,9 @@
 
 ### [Lektion 04](04_Generics)
 
-- Containerklasse für `object`
-- Containerklasse mit generischem Inhalt
-- Indexer für Containerklassen
+- Collection-Klasse für `object`
+- Collection-Klasse mit generischem Inhalt
+- Indexer für Collections
 - Enumerator mit `yield`
 
 ### [Lektion 05](05_Reflection)

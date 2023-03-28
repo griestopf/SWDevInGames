@@ -1,6 +1,6 @@
-# Lektion 04 Generics, Container, Indexer, Enumerator
+# Lektion 04 Generics, Collections, Indexer, Enumerator
 
-## Generics & Container
+## Generics & Collections
 
 Wie die meisten aktuellen objektorientierten Sprachen erlaubt es C#, die Deklaration von Datentypen so 
 offen zu halten, dass in der Deklaration verwendete andere Datentypen noch nicht konkret bekannt sein
@@ -14,15 +14,15 @@ die verwendeten Datentypen festgelegt wurden.
 
 In vielen Sprachen (C#, Java, C++) werden solche Konstrukte durch Verwendung von Spitzklammern `<>` gekennzeichnet.
 
-### Der häufigste Anwendungsfall: Container-Klassen
+### Der häufigste Anwendungsfall: Collections-Klassen
 
 Zunächst soll die Frage geklärt werden, wo solche Konstrukte überhaupt benötigt werden. Der wohl häufigste
 Anwendungsfall, und in den meisten Sprachen auch der Grund, warum es solche Konstrukte wie Generics
-überhaupt gibt, sind so genannte [_Container-Klassen_](https://de.wikipedia.org/wiki/Container_(Informatik)).
+überhaupt gibt, sind so genannte [Container, bzw. Collection-Klassen_](https://de.wikipedia.org/wiki/Container_(Informatik)).
 Inzwischen setzt sich der Begriff _Collection-Klassen_ durch, vermutlich um Verwechslungen mit leichtgewichtigen Virtualisierungen von Rechner- (v. a. Server-)Installationen rund um Technologien wie z. B. Docker oder Kubernetes zu vermeiden. Diese Bedeutung des Begriffs _Container_ wird in dieser Lektion _nicht_ behandelt. 
 
 Dabei handelt es sich um Klassen, die in der Lage sind, Mengen von Objekten anderer Datentypen abzuspeichern.
-Typischerweise gibt es unterschiedliche Container-Klassen für unterschiedliche Speicher- und 
+Typischerweise gibt es unterschiedliche Collections-Klassen für unterschiedliche Speicher- und 
 Zugriffsstrategien. Hier einige Beispiele:
 - Listen: Ähnlich wie Arrays, aber mit zur Laufzeit veränderlicher Speicherkapazität
 - Verlinkte Listen: Für schnelles Ein- und Ausfügen an beliebigen Positionen, dafür nur 
@@ -36,22 +36,22 @@ Objekte, die in der Liste gehalten werden, sein. So soll es möglich sein, eine 
 eine Liste mit double-Werten und eine Liste mit selbst definierten Datentypen (ggf. sogar Delegates)
 zu verwenden.
 
-Erste Versionen von C# (und auch Java) boten hier nur die Möglichkeit, entweder jeweils eine Container-Klasse
+Erste Versionen von C# (und auch Java) boten hier nur die Möglichkeit, entweder jeweils eine Collections-Klasse
 für den ganz konkreten Datentyp zu implementieren (also eine Listenklasse für string, eine für double, ...)
-oder eine Container-Klasse zu implementieren, die Objekte von der "Urklasse" `object` enthält. Da in C# und
+oder eine Collection-Klasse zu implementieren, die Objekte von der "Urklasse" `object` enthält. Da in C# und
 Java alle Datentypen von `object` erben (anders als z.B. in C++), ist diese Möglichkeit gegeben. 
 
-Hier ein sehr einfaches Beispiel für eine Containerklasse, die eine dynamisch wachsende Zahl an 
+Hier ein sehr einfaches Beispiel für eine Collection-Klasse, die eine dynamisch wachsende Zahl an 
 Elementen enthalten kann. Die Elemente werden in einem Array von `object` Elementen gespeichert.
 Sobald dessen Kapazität erreicht ist, wird die Anzahl der Array-Einträge verdoppelt
 
 ```C#
-    public class MyContainer
+    public class MyCollection
     {
         private object[] _theObjects;
         private int _n;
 
-        public MyContainer()
+        public MyCollection()
         {
             _theObjects = new object[2];
             _n = 0;
@@ -90,11 +90,11 @@ Sobald dessen Kapazität erreicht ist, wird die Anzahl der Array-Einträge verdo
 > - Was muss beim (lesenden) Zugriff auf Elemente passieren?
 
 
-Diese Implementierung auf Basis von `object` hat aber den Nachteil, dass beim Zugriff auf im Container
+Diese Implementierung auf Basis von `object` hat aber den Nachteil, dass beim Zugriff auf im Collection
 gespeicherte Objekte jeweils ein Cast des konkreten Typs von und nach `object` erfolgen muss. Dieser
 ist mit einem Laufzeit-Check verbunden, der erstens Zeit kostet und zweitens zur Laufzeit zu Fehlern
 führen kann, die eigentlich der Compiler schon zur Compilezeit hätte checken können: Diese Art der 
-Container-Implementierung ist nicht typsicher.
+Collection-Implementierung ist nicht typsicher.
 
 Daher wurde bereits früh (jeweils mit Version 2 der Sprachen) in C# und Java die Möglichkeit von 
 Generics eingeführt, mit deren Hilfe Datentypen deklariert werden können, die mit anderen Datentypen
@@ -115,15 +115,15 @@ Deklaration der Methode erfolgen und muss nicht auf die gesamte Klasse ausgedehn
 
 ### Beispiele
 
-Die oben gezeigte Containerklasse als Generic:
+Die oben gezeigte Collection-Kklasse als Generic:
 
 ```C#
-    public class MyContainer<T>
+    public class MyCollection<T>
     {
         private T[] _theObjects;
         private int _n;
 
-        public MyContainer()
+        public MyCollection()
         {
             _theObjects = new T[2];
             _n = 0;
@@ -159,23 +159,23 @@ Statt der allgemeinen Klasse `object` wird nun der generische Parameter `T` verw
 durch `T`) ersetzt. Dieser Parameter wurde in der Generics-Parameter-Liste am Klassennamen 
 in Spitzklammern "deklariert".
 
-Erst bei der Verwendung der Containerklasse muss festgelegt werden, von welchem Typ die zu speichernden
-Objekte sind. Hier ein Beispiel für einen Container, der `int`-Werte enthält:
+Erst bei der Verwendung der Collection-Klasse muss festgelegt werden, von welchem Typ die zu speichernden
+Objekte sind. Hier ein Beispiel für einen Collection, der `int`-Werte enthält:
 
 ```C#
-  MyContainer<int> container = new MyContainer<int>();
+  MyCollection<int> container = new MyCollection<int>();
 ```
 Man kann sich vorstellen, dass nun der Platzhalter `T` nun durch den Typ `int` ersetzt wird. In 
 C++ funktionierten die ersten "Template"-Implementierungen tatsächlich durch einen Text-Ersatz im Source-Code.
 
-In C# passiert unter der Haube mehr: Der generische Typ `MyContainer<T>` ist als solches Konstrukt auch 
+In C# passiert unter der Haube mehr: Der generische Typ `MyCollection<T>` ist als solches Konstrukt auch 
 im compilierten .NET-Code abgebildet. Zur Laufzeit wird dann durch die Spezialisierung auf `int` bei
-der Verwendung der konkrete Typ `MyContainer<int>` erzeugt.
+der Verwendung der konkrete Typ `MyCollection<int>` erzeugt.
 
 ### Einschränkungen mit `where`
 
 Manchmal werden an die als Parameter zu verwendenden Typen (also die Typen, die `T` ersetzen sollen)
-bestimmte Anforderungen gestellt. Man stelle sich eine Containerklasse vor, die ihre Elemente in sortierter
+bestimmte Anforderungen gestellt. Man stelle sich eine Collection-Klasse vor, die ihre Elemente in sortierter
 Anordnung enthält.
 
 Dazu muss dem Compiler mitgeteilt werden, dass nur bestimmte Kategorien von Typen für den Ersatz 
@@ -186,7 +186,7 @@ In folgendem Beispiel wird gefordert, dass der Datentyp, der für T verwendet wi
 `IComparable` implementieren muss:
 
 ```C#
-    public class MyContainer<T> where T:IComparable
+    public class MyCollection<T> where T:IComparable
     {
         //...
     }
@@ -205,7 +205,7 @@ bietet, wie z.B:
 
 > #### 👨‍🔧 TODO
 >
-> - Erweitert die Containerklasse `MyContainer` so, dass bei Aufruf von `Add` das übergebene
+> - Erweitert die Collection-Klasse `MyCollection` so, dass bei Aufruf von `Add` das übergebene
 >   Objekt sortiert in den Array eingefügt wird. Dazu muss:
 >   - Die richtige Einfügestelle gefunden werden: Es muss dass neu hinzuzufügende Objekt
 >     mit den bereits im Array stehenden Objekten verglichen werden. 
@@ -222,7 +222,7 @@ etc. sind immer auf einem Grundtyp definiert. So gibt es z.B. Vektorräume über
 Zahlen aber auch über Funktionen. Die Voraussetzung ist, dass auf den Grundmenge eine Addition und
 eine Multiplikation definiert ist, also bestimmte Operationen vorhanden sind. 
 
-Man könnte sich nun - analog zu den Container-Typen - vorstellen, dass eine Klasse `Vektorraum` als 
+Man könnte sich nun - analog zu den Collection-Typen - vorstellen, dass eine Klasse `Vektorraum` als 
 Generic implementiert wird, und der als Grundtyp zu verwendende Typ zunächst als generischer Parameter
 `T` deklariert wird, so dass im Nachhinein, der Vektorraum mit allen möglichen Grundtypen verwendbar ist:
 
@@ -243,20 +243,20 @@ die Möglichkeit überladener Operatoren sowieso gar nicht gibt, stellt sich hie
 
 ## Indexer
 
-Arrays (als sehr simple Form von Containern) bieten einen direkten (wahlfreien) Zugriff auf einzelne
+Arrays (als sehr simple Form von Collections) bieten einen direkten (wahlfreien) Zugriff auf einzelne
 Elemente durch die bereits in die Sprache eingebaute Indizierungs-Schreibweise mit eckiger Klammer (`[]`).
 
-In Containerklassen kann ein wahlfreier Zugriff zunächst über Methoden wie z.B. `SetAt(T o, int index)` oder
+In Collection-Klassen kann ein wahlfreier Zugriff zunächst über Methoden wie z.B. `SetAt(T o, int index)` oder
 `T GetAt(int i)` realisiert werden
 
 > #### 👨‍🔧 TODO
 >
-> - Erweitert die (nicht-sortiert speichernde) Klasse `MyContainer` um die 
+> - Erweitert die (nicht-sortiert speichernde) Klasse `MyCollection` um die 
 >   Methode `SetAt(T o, int index)`. `GetAt` existiert ja bereits).
 
-Um selbst definierten Containern, die mit einem Index einen wahlfreien Zugriff auf die enthaltenen Elemente
+Um selbst definierten Collections, die mit einem Index einen wahlfreien Zugriff auf die enthaltenen Elemente
 ermöglichen sollen, die gleiche elegante Eckige-Klammer-Syntax wie bei Arrays zu eröffnen, kann einer
-Containerklasse ein Indexer hinzugefügt werden werden. Ein Indexer ist dabei eine spezieller Form einer
+Collection-Klasse ein Indexer hinzugefügt werden werden. Ein Indexer ist dabei eine spezieller Form einer
 "Eigenschaft" (Property), also ein Klassen-Bestandteil, der nach außen aussieht wie ein Feld, aber 
 eine Set- und eine Get-Methode deklariert, die bei Zuweisung oder beim Auslesen aufgerufen werden. 
 
@@ -273,19 +273,19 @@ enthält die allgemeine Deklaration eines Indexers - hier schon mit dem generisc
 
 > #### 👨‍🔧 TODO
 >
-> - Erweitert die Klasse `MyContainer` um einen Indexer nach obigem Beispiel, der in `get` die Methode `GetAt()`
+> - Erweitert die Klasse `MyCollection` um einen Indexer nach obigem Beispiel, der in `get` die Methode `GetAt()`
 >   und in `set` die Methode `SetAt()` aufruft.
 > - Ändert den Beispiel-Code in `main()` so ab, dass der Indexer sowohl lesend als auch schreibend verwendet 
 >   wird.
 > - Setzt Breakpoints in `SetAt()` und `GetAt()` um zu sehen, wie beim Zugriff über den Indexer diese
 >   Methoden aufgerufen werden. 
 > - Macht euch klar, dass der Datentyp `int` der hier als Index-Typ verwendet wird, auch durch andere Typen
->   implementiert werden kann. Somit sind assoziative Container wie Dictionaries und Hash-Tables möglich,
+>   implementiert werden kann. Somit sind assoziative Collection wie Dictionaries und Hash-Tables möglich,
 >   die mit beliebigen Datentypen indizierbar sind.
 
 ## Enumerator
 
-Mit dem Indexer lassen sich nun Container bequem innerhalb von Schleifen beschreiben und auslesen. 
+Mit dem Indexer lassen sich nun Collections bequem innerhalb von Schleifen beschreiben und auslesen. 
 Dazu muss die Schleife mit einer Zählvariablen konstruiert worden sein:
 
 ```C#
@@ -295,10 +295,10 @@ Dazu muss die Schleife mit einer Zählvariablen konstruiert worden sein:
   }
 ``` 
 
-Nicht immer sollen Container aber wahlfreien Zugriff (über einen Index) bieten. Sehr oft genügt
+Nicht immer sollen Collections aber wahlfreien Zugriff (über einen Index) bieten. Sehr oft genügt
 es (oder es ist gar nicht anders möglich), sequenziellen Zugriff auf die Inhalte zu ermöglichen. 
-Dabei können  Benutzer in einer vom Container vorgegebenen Reihenfolge (und nicht in einer selbst
-definierten Reihenfolge, wie sämtliche im Container
+Dabei können  Benutzer in einer von der Collection vorgegebenen Reihenfolge (und nicht in einer selbst
+definierten Reihenfolge, wie sämtliche in der Collection
 gespeicherten Inhalte in einer Schleife durchlaufen können.
 
 Diese gegenüber dem wahlfreien Zugriff "abgespeckte" Form, kann in C# mit dem speziellen `foreach`-
@@ -311,7 +311,7 @@ Schleifenkonstrukt realisiert werden:
   }
 ``` 
 
-Damit das funktioniert, muss die Container-Klasse das spezielle Interface 
+Damit das funktioniert, muss die Collection-Klasse das spezielle Interface 
 [`IEnumerable`](https://msdn.microsoft.com/de-de/library/9eekhta0(v=vs.110).aspx) 
 implementieren.
 Sie muss "enumerierbar" sein. Dieses Interface verlangt, dass eine einzige Methode implementiert wird, 
@@ -323,7 +323,7 @@ nämlich `GetEnumerator()`. Diese liefert ein Objekt zurück, dass wiederum ein 
 - Der Eigenschaft `Current` mit der auf das aktuelle Element zugegriffen werden kann.
 - Der Methode `MoveNext()` mit der der Enumerator um ein Element weiter geschaltet werden kann.
 - Der Methode `Reset()` mit der der Enumerator auf "Initialstellung" zurückgesetzt werden kann, 
-  nämlich eine Position _vor_ dem ersten Element im Container.
+  nämlich eine Position _vor_ dem ersten Element in der Collection.
 
 Der Compiler generiert dann aus einer `foreach`-Schleife eine "ganz normale" `for` Schleife.
 Die oben gezeigte `foreach`-Schleife ist somit nur syntaktischer Zucker der folgenden
@@ -338,16 +338,16 @@ Implementierung:
 ```
 
 Der Umgang mit Enumeratoren ist also aus Anwendersicht durch die Compiler-Unterstützung
-mit `foreach` sehr angenehm. Für Entwickler, die ihre selbst implementierte Container-Klasse 
+mit `foreach` sehr angenehm. Für Entwickler, die ihre selbst implementierte Collection-Klasse 
 um die Enumerierbarkeit erweitern wollen, ist es ein mittlerer Alptraum, denn
 
-- Sie müssen ihre Container-Klasse das Interface `IEnumerable` implementieren lassen, d.h. die 
+- Sie müssen ihre Collection-Klasse das Interface `IEnumerable` implementieren lassen, d.h. die 
   Methode `GetEnumerator()` hinzufügen.
 - Deren Rückgabewert muss ein neu zu erstellender Datentyp sein, der das Interface `IEnumerator` 
   implementiert. Dieser Datentyp muss implementiert werden. 
 - Die Implementierung dieses Datentyps muss oben genannte Bestandteile `Current`, 
   `MoveNext()` und `Reset()` enthalten.
-- Diese Methoden müssen irgendwie auf das ursprüngliche Container-Objekt zugreifen.
+- Diese Methoden müssen irgendwie auf das ursprüngliche Collection-Objekt zugreifen.
 - Zu allem Übel müssen die Interfaces `IEnumerable` und `IEnumerator` auch noch 
   in zwei Geschmacksrichtungen implementiert werden: Einmal ohne generischen Parameter 
   und einmal mit dem generischen Parameter unseres Inhaltstyps `T`.
@@ -359,12 +359,12 @@ so genannte Co-Routinen implementieren lassen. Kurz gesagt sind das Methoden,
 die sich an einer bestimmten Stelle unterbrechen lassen und dann beim nächsten Aufruf
 ihre Arbeit dort fortsetzen, wo sie unterbrochen wurden.
 
-Statt also oben angegebene Liste abzuarbeiten, kann unsere Klasse `MyContainer` auch 
+Statt also oben angegebene Liste abzuarbeiten, kann unsere Klasse `MyCollection` auch 
 auf folgende Art enumerierbar gemacht werden
 
 - Die Klasse `IEnumerable<T>` implementieren lassen:
   ```C#
-    public class MyContainer<T> : IEnumerable<T>
+    public class MyCollection<T> : IEnumerable<T>
     {
         ...
   ```
@@ -394,7 +394,7 @@ auf folgende Art enumerierbar gemacht werden
 
 > #### 👨‍🔧 TODO
 >
-> - Erweitert `MyContainer` um die Enumerierbarkeit und verwendet eine
+> - Erweitert `MyCollection` um die Enumerierbarkeit und verwendet eine
 >   `foreach`-Schleife um auf die Inhalte zuzugreifen.
 
 ### Wo geht `yield` nicht/schlecht?
@@ -422,7 +422,7 @@ in Stack-Daten gehalten werden, da beim Traversieren eines Szenengraphen über
 Hierarchie-Ebenen hinweg Informationen zu jeder einzelnen gerade besuchten 
 Hierarchie-Ebene gehalten werden muss. 
 
-Hierzu gibt es folgende Container-Klassen:
+Hierzu gibt es folgende Collection-Klassen:
 
 - [`StateStack<T>`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Xene/VisitorState.cs#L42)
   kann Instanzen beliebiger Typen als Stack speichern. Die Operation

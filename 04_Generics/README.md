@@ -18,7 +18,7 @@ In vielen Sprachen (C#, Java, C++) werden solche Konstrukte durch Verwendung von
 
 Zunächst soll die Frage geklärt werden, wo solche Konstrukte überhaupt benötigt werden. Der wohl häufigste
 Anwendungsfall, und in den meisten Sprachen auch der Grund, warum es solche Konstrukte wie Generics
-überhaupt gibt, sind so genannte [Container, bzw. Collection-Klassen_](https://de.wikipedia.org/wiki/Container_(Informatik)).
+überhaupt gibt, sind so genannte [Container, bzw. Collection-Klassen](https://de.wikipedia.org/wiki/Container_(Informatik)).
 Inzwischen setzt sich der Begriff _Collection-Klassen_ durch, vermutlich um Verwechslungen mit leichtgewichtigen Virtualisierungen von Rechner- (v. a. Server-)Installationen rund um Technologien wie z. B. Docker oder Kubernetes zu vermeiden. Diese Bedeutung des Begriffs _Container_ wird in dieser Lektion _nicht_ behandelt. 
 
 Dabei handelt es sich um Klassen, die in der Lage sind, Mengen von Objekten anderer Datentypen abzuspeichern.

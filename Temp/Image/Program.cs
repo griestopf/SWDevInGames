@@ -2,10 +2,8 @@
 using System.Drawing.Imaging;
 
 // See https://aka.ms/new-console-template for more information
-
-
-
-Console.WriteLine("Hello, World!");
+Image imgIBau = new Image("img/ibau_gross.jpg");
+Console.WriteLine("ibau_gross.jpg geladen");
 
 
 public enum PixFormat

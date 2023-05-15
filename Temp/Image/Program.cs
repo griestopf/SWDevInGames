@@ -4,6 +4,7 @@ using System.Drawing.Imaging;
 // See https://aka.ms/new-console-template for more information
 Image imgIBau = new Image("img/ibau_gross.jpg");
 Console.WriteLine("ibau_gross.jpg geladen");
+imgIBau.SaveAs("img/ibau_gross.png");
 
 
 public enum PixFormat
@@ -38,8 +39,19 @@ public class Image
             _                          => throw new ArgumentException("Don't know BytesPerPixel for pixel format: " + PixFormat)
         };
 
+    private static void BlitClip(ref int iSrc, int sizeSrc, ref int sizeBlk, ref int iDst, int sizeDst)
+    {
+        int deltaMin = Math.Min(Math.Min(iSrc, iDst), 0);
+        int deltaMax = Math.Max(Math.Max(iSrc+sizeBlk-sizeSrc, iDst+sizeBlk-sizeDst), 0);
+
+        // Wende durch Überlappung entstehende Werte (deltaMin/deltaMax) auf die "ref"-Werte an.
+    }
+
     public void Blit(int xs, int ys, int w, int h, Image dest, int xd, int yd)
     {
+      
+
+
 
     }
 

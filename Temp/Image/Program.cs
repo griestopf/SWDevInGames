@@ -4,7 +4,10 @@ using System.Drawing.Imaging;
 // See https://aka.ms/new-console-template for more information
 Image imgIBau = new Image("img/ibau_gross.jpg");
 Console.WriteLine("ibau_gross.jpg geladen");
-imgIBau.SaveAs("img/ibau_gross.png");
+Image imgHFU = new Image("img/hfu.jpg");
+Console.WriteLine("hfu.jpg geladen");
+imgHFU.Blit(0, 0, 200, 71, imgIBau, 10, 10);
+imgIBau.SaveAs("img/ibau_mit_logo.jpg");
 
 
 public enum PixFormat
@@ -26,9 +29,9 @@ public class Image
     public int Width {init; get;}
     public int Height {init; get;}
 
-    PixFormat PixFormat;
+    public PixFormat PixFormat;
 
-    int BytesPerPixel =>
+    public int BytesPerPixel =>
         PixFormat switch {
             PixFormat.R8_G8_B8         => 3,
             PixFormat.A8_R8_G8_B8      => 4,
@@ -45,14 +48,108 @@ public class Image
         int deltaMax = Math.Max(Math.Max(iSrc+sizeBlk-sizeSrc, iDst+sizeBlk-sizeDst), 0);
 
         // Wende durch Überlappung entstehende Werte (deltaMin/deltaMax) auf die "ref"-Werte an.
+        iSrc += deltaMin;
+        iDst += deltaMin;
+        sizeBlk += deltaMin;
+        sizeBlk -= deltaMax;
+        if (sizeBlk < 0)
+            sizeBlk = 0;
     }
+
+    delegate void CopyLineFunc(int iSrc, int iDst, int nPixels);
 
     public void Blit(int xs, int ys, int w, int h, Image dest, int xd, int yd)
     {
-      
+        BlitClip(ref xs, Width,  ref w, ref xd, dest.Width);
+        BlitClip(ref ys, Height, ref h, ref yd, dest.Height);
 
+        CopyLineFunc copyLine;
 
+        if (PixFormat == dest.PixFormat)
+        {
+            copyLine = (int iSrc, int iDst, int nPixels) =>
+            {
+                Array.Copy(_pixels, iSrc, dest._pixels, iDst, nPixels * BytesPerPixel);
+            };
+        }
+        else
+        {
+            switch(PixFormat)
+            {
+                case PixFormat.R8_G8_B8:
+                    switch (dest.PixFormat)
+                    {
+                        case PixFormat.R8_G8_B8:
+                            throw new Exception("Cannot handle combination of Source and Destination Pixel Format");
+                            break;
+                        case PixFormat.A8_R8_G8_B8:
+                            copyLine = (int iSrc, int iDst, int nPixels) =>
+                            {
+                                for (int x = 0; x < nPixels; x++)
+                                {
+                                    int iByteDst = iDst + x * dest.BytesPerPixel;
+                                    int iByteSrc = iSrc + x * BytesPerPixel;
+                                    dest._pixels[iDst ] = 255;
+                                    dest._pixels[iDst+1] = _pixels[iSrc];
+                                    dest._pixels[iDst+2] = _pixels[iSrc+1];
+                                    dest._pixels[iDst+3] = _pixels[iSrc+2];
+                                }                                ;
+                            };
+                            break;
+                        case PixFormat.I8:                
+                            throw new Exception("Cannot handle combination of Source and Destination Pixel Format");
+                            break;
+                        default:
+                             throw new Exception("Cannot handle combination of Source and Destination Pixel Format");
+                   }
+                    break;
+                case PixFormat.A8_R8_G8_B8:
+                    switch (dest.PixFormat)
+                    {
+                        case PixFormat.R8_G8_B8:
+                             throw new Exception("Cannot handle combination of Source and Destination Pixel Format");
+                           break;
+                        case PixFormat.A8_R8_G8_B8:
+                             throw new Exception("Cannot handle combination of Source and Destination Pixel Format");
+                           break;
+                        case PixFormat.I8:                
+                             throw new Exception("Cannot handle combination of Source and Destination Pixel Format");
+                           break;
+                       default:
+                             throw new Exception("Cannot handle combination of Source and Destination Pixel Format");
+                    }
+                    break;
+                case PixFormat.I8:                
+                    switch (dest.PixFormat)
+                    {
+                        case PixFormat.R8_G8_B8:
+                             throw new Exception("Cannot handle combination of Source and Destination Pixel Format");
+                           break;
+                        case PixFormat.A8_R8_G8_B8:
+                             throw new Exception("Cannot handle combination of Source and Destination Pixel Format");
+                           break;
+                        case PixFormat.I8:                
+                             throw new Exception("Cannot handle combination of Source and Destination Pixel Format");
+                           break;
+                        default:
+                             throw new Exception("Cannot handle combination of Source and Destination Pixel Format");
 
+                    }
+                    break;
+                default:
+                        throw new Exception("Cannot handle combination of Source and Destination Pixel Format");
+            }
+
+        }
+
+        for (int y = 0; y < h; y++)
+        {
+            int iSrc = ((ys + y)*Width      + xs) * BytesPerPixel;
+            int iDst = ((yd + y)*dest.Width + xd) * dest.BytesPerPixel;
+
+            copyLine(iSrc, iDst , w);
+            // Array.Copy(_pixels, iSrc, dest._pixels, iDst, w * BytesPerPixel);
+        }
     }
 
     public void SaveAs(string path)

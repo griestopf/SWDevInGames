@@ -4,9 +4,22 @@ using System.Diagnostics;
 using System.Runtime.Intrinsics;
 using System.Runtime.Intrinsics.X86;
 
+// RGB->SW->RGB Test
+Image ibau = new Image("img/ibau_gross.jpg");
+Image ibau_sw = new Image(ibau.Width, ibau.Height, PixFmt.L8);
+
+ibau.Blit(0, 0, ibau.Width, ibau.Height, ibau_sw, 0, 0);
+Image ibau_reconverted = new Image(ibau.Width, ibau.Height, PixFmt.R8_G8_B8);
+ibau_sw.Blit(0, 0, ibau.Width, ibau.Height, ibau_reconverted, 0, 0);
+
+ibau_reconverted.SaveAs("img/out/ibau_l8_RGB.jpg");
+
+
+
+/*
 // ARGB to RGB conversion test
 Image hfu_argb = new Image("img/hfu_transparent_huge.png");
-Debug.Assert(hfu_argb.PixFormat == PixFmt.A8_R8_G8_B8);
+Debug.Assert(hfu_argb.PixFormat == PixFormat.A8_R8_G8_B8);
 
 Stopwatch sw = new Stopwatch();
 
@@ -15,38 +28,38 @@ long msPtr = 0;
 long msSse = 0;
 
 // cache warm-up for pointer access
-Image hfu_rgb_ptrwarmup = new Image(hfu_argb.Width, hfu_argb.Height, PixFmt.R8_G8_B8);
-hfu_argb.BltPtr(0, 0, hfu_argb.Width, hfu_argb.Height, hfu_rgb_ptrwarmup, 0, 0);
+Image hfu_rgb_ptrwarmup = new Image(hfu_argb.Width, hfu_argb.Height, PixFormat.R8_G8_B8);
+hfu_argb.BlitPtr(0, 0, hfu_argb.Width, hfu_argb.Height, hfu_rgb_ptrwarmup, 0, 0);
 
 // cache warm-up for sse access
-Image hfu_rgb_ssewarmup = new Image(hfu_argb.Width, hfu_argb.Height, PixFmt.R8_G8_B8);
-hfu_argb.BltSse(0, 0, hfu_argb.Width, hfu_argb.Height, hfu_rgb_ssewarmup, 0, 0);
+Image hfu_rgb_ssewarmup = new Image(hfu_argb.Width, hfu_argb.Height, PixFormat.R8_G8_B8);
+hfu_argb.BlitSse(0, 0, hfu_argb.Width, hfu_argb.Height, hfu_rgb_ssewarmup, 0, 0);
 
 // cache warm-up for array access
-Image hfu_rgb_arrwarmup = new Image(hfu_argb.Width, hfu_argb.Height, PixFmt.R8_G8_B8);
-hfu_argb.Blt(0, 0, hfu_argb.Width, hfu_argb.Height, hfu_rgb_arrwarmup, 0, 0);
+Image hfu_rgb_arrwarmup = new Image(hfu_argb.Width, hfu_argb.Height, PixFormat.R8_G8_B8);
+hfu_argb.Blit(0, 0, hfu_argb.Width, hfu_argb.Height, hfu_rgb_arrwarmup, 0, 0);
 
 
 for (int i = 0; i < 100; i++)
 {
     // stopwatch pointer access
-    Image hfu_rgb_ptr = new Image(hfu_argb.Width, hfu_argb.Height, PixFmt.R8_G8_B8);
+    Image hfu_rgb_ptr = new Image(hfu_argb.Width, hfu_argb.Height, PixFormat.R8_G8_B8);
     sw.Restart();
-    hfu_argb.BltPtr(0, 0, hfu_argb.Width, hfu_argb.Height, hfu_rgb_ptr, 0, 0);
+    hfu_argb.BlitPtr(0, 0, hfu_argb.Width, hfu_argb.Height, hfu_rgb_ptr, 0, 0);
     msPtr += sw.ElapsedMilliseconds;
     sw.Stop();
 
     // stopwatch sse access
-    Image hfu_rgb_sse = new Image(hfu_argb.Width, hfu_argb.Height, PixFmt.R8_G8_B8);
+    Image hfu_rgb_sse = new Image(hfu_argb.Width, hfu_argb.Height, PixFormat.R8_G8_B8);
     sw.Restart();
-    hfu_argb.BltSse(0, 0, hfu_argb.Width, hfu_argb.Height, hfu_rgb_sse, 0, 0);
+    hfu_argb.BlitSse(0, 0, hfu_argb.Width, hfu_argb.Height, hfu_rgb_sse, 0, 0);
     msSse += sw.ElapsedMilliseconds;
     sw.Stop();
 
     // stopwatch array access
-    Image hfu_rgb_arr = new Image(hfu_argb.Width, hfu_argb.Height, PixFmt.R8_G8_B8);
+    Image hfu_rgb_arr = new Image(hfu_argb.Width, hfu_argb.Height, PixFormat.R8_G8_B8);
     sw.Restart();
-    hfu_argb.Blt(0, 0, hfu_argb.Width, hfu_argb.Height, hfu_rgb_arr, 0, 0);
+    hfu_argb.Blit(0, 0, hfu_argb.Width, hfu_argb.Height, hfu_rgb_arr, 0, 0);
     msArr += sw.ElapsedMilliseconds;
     sw.Stop();
 }
@@ -54,35 +67,40 @@ for (int i = 0; i < 100; i++)
 Console.WriteLine($"Array Access duration: {msArr/1000.0}s; Pointer Access duration: {msPtr/1000.0}s; SSE Access duration: {msSse/1000.0}s; ");
 
 hfu_rgb_ssewarmup.SaveAs("img/out/hfu_rgb_huge.jpg");
-
-/* // RGB->SW->RGB Test
-Image ibau = new Image("img/ibau_gross.jpg");
-Image ibau_sw = new Image(ibau.Width, ibau.Height, PixFmt.L8);
-
-ibau.BltPtr(0, 0, ibau.Width, ibau.Height, ibau_sw, 0, 0);
-Image ibau_reconverted = new Image(ibau.Width, ibau.Height, PixFmt.R8_G8_B8);
-ibau_sw.BltPtr(0, 0, ibau.Width, ibau.Height, ibau_reconverted, 0, 0);
-
-ibau_reconverted.SaveAs("img/out/ibau_l8_RGB.jpg");
 */
 
 
-public enum PixFmt
+public enum PixFormat
 {
     R8_G8_B8,
     A8_R8_G8_B8,
-    L8,
+    I8,
+    R32_G32_B32,
+    R32_G32_B32_A32,
+    I32,    
 }
 
 public class Image
 {
     byte[] _pixels;
 
-    public int Width { get; private set;}
-    public int Height { get; private set;}
-    public PixFmt PixFormat { get; private set;}
+    public int Width { get; init;}
+    public int Height { get; init;}
+    public PixFormat PixFormat { get; init;}
 
-    public Image(int width, int height, PixFmt pixFormat)
+    public int BytesPerPixel =>
+        PixFormat switch {
+            PixFormat.R8_G8_B8         => 3,
+            PixFormat.A8_R8_G8_B8      => 4,
+            PixFormat.I8               => 1,
+            PixFormat.R32_G32_B32      => 3*4,
+            PixFormat.R32_G32_B32_A32  => 4*4,
+            PixFormat.I32              => 1*4,
+            _                          => throw new ArgumentException("Don't know BytesPerPixel for pixel format: " + PixFormat)
+        };
+
+
+    public Image(int width, int height, PixFormat pixFormat)
     {
         Width = width;
         Height = height;
@@ -99,8 +117,8 @@ public class Image
 
         PixFormat = bm.PixelFormat switch
         {
-            PixelFormat.Format24bppRgb  => PixFmt.R8_G8_B8,
-            PixelFormat.Format32bppArgb => PixFmt.A8_R8_G8_B8,
+            PixelFormat.Format24bppRgb  => PixFormat.R8_G8_B8,
+            PixelFormat.Format32bppArgb => PixFormat.A8_R8_G8_B8,
             _                           => throw new ArgumentException("Unkown pixel format in " + path)
         };
 
@@ -110,7 +128,7 @@ public class Image
 
         switch (PixFormat)
         {
-            case PixFmt.R8_G8_B8:
+            case PixFormat.R8_G8_B8:
                 for (int y = 0; y < Height; y++)
                 {
                     for (int x = 0; x < Width; x++)
@@ -124,7 +142,7 @@ public class Image
                     }
                 }                
                 break;
-            case PixFmt.A8_R8_G8_B8:
+            case PixFormat.A8_R8_G8_B8:
                 for (int y = 0; y < Height; y++)
                 {
                     for (int x = 0; x < Width; x++)
@@ -147,9 +165,9 @@ public class Image
     {
         PixelFormat pf = PixFormat switch 
         {
-            PixFmt.R8_G8_B8    => PixelFormat.Format24bppRgb,
-            PixFmt.A8_R8_G8_B8 => PixelFormat.Format32bppArgb,
-            _   => throw new ArgumentException($"Cannot save pixel format {Enum.GetName<PixFmt>(PixFormat)}.")
+            PixFormat.R8_G8_B8    => PixelFormat.Format24bppRgb,
+            PixFormat.A8_R8_G8_B8 => PixelFormat.Format32bppArgb,
+            _   => throw new ArgumentException($"Cannot save pixel format {Enum.GetName<PixFormat>(PixFormat)}.")
         };
 
         Bitmap bm = new Bitmap(Width, Height, pf);
@@ -158,7 +176,7 @@ public class Image
 
         switch (PixFormat)
         {
-            case PixFmt.R8_G8_B8:
+            case PixFormat.R8_G8_B8:
                 for (int y = 0; y < Height; y++)
                 {
                     for (int x = 0; x < Width; x++)
@@ -168,7 +186,7 @@ public class Image
                     }
                 }                
                 break;
-            case PixFmt.A8_R8_G8_B8:
+            case PixFormat.A8_R8_G8_B8:
                 for (int y = 0; y < Height; y++)
                 {
                     for (int x = 0; x < Width; x++)
@@ -184,31 +202,133 @@ public class Image
     }
 
 
-    private static void ClipBlt(int sizeSrc, ref int iSrc, int sizeDst, ref int iDst, ref int sizeBlk)
+    private static void BlitClip(ref int iSrc, int sizeSrc, ref int sizeBlk, ref int iDst, int sizeDst)
     {
-        // Adjust left border
+        // Adjust left/upper border
         // The negative number with the biggest magnitude of negative start indices (or 0, if both are 0 or bigger).
-        // int iDeltaL = M.Min(0, M.Min(iDst, iSrc));
-        int iDeltaL = (iDst < iSrc) ? iDst : iSrc;
-        if (iDeltaL > 0)
-            iDeltaL = 0;
+        int iDeltaMin = Math.Min(0, Math.Min(iDst, iSrc));
 
-        // Adjust right border
-        // The biggest overlap over the right border (or 0 if no overlap).
-        // int iDeltaR = M.Max(0, M.Max(iDst + sizeBlk - sizeDst, iSrc + sizeBlk - sizeSrc));
-        int dstRb = iDst + sizeBlk - sizeDst;
-        int srcRb = iSrc + sizeBlk - sizeSrc;
-        int iDeltaR = (dstRb > srcRb) ? dstRb : srcRb;
-        if (iDeltaR < 0)
-            iDeltaR = 0;
+        // Adjust right/lower border
+        // The biggest overlap over the right/lower border (or 0 if no overlap).
+        int iDeltaMax = Math.Max(0, Math.Max(iDst + sizeBlk - sizeDst, iSrc + sizeBlk - sizeSrc));
 
-        iDst -= iDeltaL;
-        iSrc -= iDeltaL;
-        sizeBlk += iDeltaL;
-        sizeBlk -= iDeltaR;
+        iDst -= iDeltaMin;
+        iSrc -= iDeltaMin;
+        sizeBlk += iDeltaMin;
+        sizeBlk -= iDeltaMax;
         if (sizeBlk < 0)
             sizeBlk = 0;
     }
+
+
+    #region ArrayAccess
+    ///////////////////////////////////////////////////////////////////////////
+    // Array access
+    ///////////////////////////////////////////////////////////////////////////
+
+    delegate void CopyLine(byte[] srcPxl, int iSrc, byte[] dstPxl, int iDst, int nPixels);
+
+    public void Blit(int xSrc, int ySrc, int w, int h, Image dst, int xDst, int yDst)
+    {
+        BlitClip(ref xSrc, Width,  ref w, ref xDst, dst.Width);
+        BlitClip(ref ySrc, Height, ref h, ref yDst, dst.Height);
+
+        CopyLine? copyLine = null;
+
+        if (PixFormat == dst.PixFormat)
+        {
+            copyLine = (srcPxl, iSrc, dstPxl, iDst, nPixels) =>
+            {
+                Array.Copy(srcPxl, iSrc, dstPxl, iDst, nPixels * BytesPerPixel);
+            };
+        }
+        else
+        {
+            switch (PixFormat)
+            {
+                case PixFormat.R8_G8_B8:
+                    switch (dst.PixFormat)
+                    {
+                        case PixFormat.A8_R8_G8_B8:
+
+                            break;
+                        case PixFormat.I8:
+                            copyLine = (srcPxl, iSrc, dstPxl, iDst, nPixels) =>
+                            {
+                                for (int x = 0; x < nPixels; x++)
+                                {
+                                    int iSrcLine = iSrc + x * (BytesPerPixel);
+                                    int col = srcPxl[iSrcLine  ] * 2;
+                                    col +=    srcPxl[iSrcLine+1] * 3;
+                                    col +=    srcPxl[iSrcLine+2];
+                                    col /= 6;
+                                    dstPxl[iDst + x * dst.BytesPerPixel] = (byte) col;
+                                }
+                            };
+                            break;
+                    }
+                    break;
+                case PixFormat.A8_R8_G8_B8:
+                    switch (dst.PixFormat)
+                    {
+                        case PixFormat.R8_G8_B8:
+                            copyLine = (srcPxl, iSrc, dstPxl, iDst, nPixels) =>
+                            {
+                                int nBytesSrc = nPixels * BytesPerPixel;
+                                int iByteSrc = iSrc;
+                                int iByteDst = iDst;
+                                for (int x = 0; x < nPixels; x++)
+                                {
+                                    iByteSrc++;                                 // skip alpha
+                                    dstPxl[iByteDst++] = srcPxl[iByteSrc++];    // copy R
+                                    dstPxl[iByteDst++] = srcPxl[iByteSrc++];    // copy G
+                                    dstPxl[iByteDst++] = srcPxl[iByteSrc++];    // copy B
+                                }
+                            };
+
+                            break;
+                        case PixFormat.I8:
+                            break;
+                    }
+                    break;
+                case PixFormat.I8:
+                    switch (dst.PixFormat)
+                    {
+                        case PixFormat.R8_G8_B8:
+                            copyLine = (srcPxl, iSrc, dstPxl, iDst, nPixels) =>
+                            {
+                                for (int x = 0; x < nPixels; x++)
+                                {
+                                    byte intensity = srcPxl[iSrc + x * BytesPerPixel];
+
+                                    int iDstLine = iDst + x * dst.BytesPerPixel;
+                                    dstPxl[iDstLine  ] = intensity;
+                                    dstPxl[iDstLine+1] = intensity;
+                                    dstPxl[iDstLine+2] = intensity;
+                                }
+                            };
+                            break;
+                        case PixFormat.A8_R8_G8_B8:
+
+                            break;
+                    }
+                    break;
+            }
+
+        }
+
+        if (copyLine == null)
+            throw new ArgumentException($"Cannot convert pixels from {Enum.GetName<PixFormat>(PixFormat)} to {Enum.GetName<PixFormat>(dst.PixFormat)}");
+
+        for (int y = 0; y < h; y++)
+        {
+                int iSrc =  ((ySrc + y) * Width     + xSrc) * BytesPerPixel;
+                int iDst =  ((yDst + y) * dst.Width + xDst) * dst.BytesPerPixel;
+                copyLine(_pixels, iSrc, dst._pixels, iDst, w);
+                // Array.Copy(_pixels, iSrc, dest._pixels, iDst, w * BytesPerPixel);
+        }
+    }
+    #endregion
 
     #region PointerAccess
     ///////////////////////////////////////////////////////////////////////////
@@ -218,10 +338,10 @@ public class Image
 
     unsafe delegate void CopyLinePtr(byte *pSrc, int iSrc, byte* pDst, int iDst, int nPixels);
 
-    unsafe public void BltPtr(int xSrc, int ySrc, int w, int h, Image dst, int xDst, int yDst)
+    unsafe public void BlitPtr(int xSrc, int ySrc, int w, int h, Image dst, int xDst, int yDst)
     {
-        ClipBlt(Width, ref xSrc, dst.Width, ref xDst, ref w);
-        ClipBlt(Height, ref ySrc, dst.Height, ref yDst, ref h);
+        BlitClip(ref xSrc, Width,  ref w, ref xDst, dst.Width);
+        BlitClip(ref ySrc, Height, ref h, ref yDst, dst.Height);
 
         CopyLinePtr? copyLine = null;
 
@@ -238,12 +358,12 @@ public class Image
             {
                 switch (PixFormat)
                 {
-                    case PixFmt.R8_G8_B8:
+                    case PixFormat.R8_G8_B8:
                         switch (dst.PixFormat)
                         {
-                            case PixFmt.A8_R8_G8_B8:
+                            case PixFormat.A8_R8_G8_B8:
                                 break;
-                            case PixFmt.L8:
+                            case PixFormat.I8:
                                 copyLine = (pSrc, iSrc, pDst, iDst, nPixels) =>
                                 {
                                     for (int x = 0; x < nPixels; x++)
@@ -259,10 +379,10 @@ public class Image
                                 break;
                         }
                         break;
-                    case PixFmt.A8_R8_G8_B8:
+                    case PixFormat.A8_R8_G8_B8:
                         switch (dst.PixFormat)
                         {
-                            case PixFmt.R8_G8_B8:
+                            case PixFormat.R8_G8_B8:
                                 copyLine = (pSrc, iSrc, pDst, iDst, nPixels) =>
                                 {
                                     pSrc += iSrc;
@@ -279,15 +399,15 @@ public class Image
                                 };
 
                                 break;
-                            case PixFmt.L8:
+                            case PixFormat.I8:
 
                                 break;
                         }
                         break;
-                    case PixFmt.L8:
+                    case PixFormat.I8:
                         switch (dst.PixFormat)
                         {
-                            case PixFmt.R8_G8_B8:
+                            case PixFormat.R8_G8_B8:
                                 copyLine = (pSrc, iSrc, pDst, iDst, nPixels) =>
                                 {
                                     for (int x = 0; x < nPixels; x++)
@@ -301,7 +421,7 @@ public class Image
                                     }
                                 };
                                 break;
-                            case PixFmt.A8_R8_G8_B8:
+                            case PixFormat.A8_R8_G8_B8:
 
                                 break;
                         }
@@ -311,7 +431,7 @@ public class Image
             }
 
             if (copyLine == null)
-                throw new ArgumentException($"Cannot convert pixels from {Enum.GetName<PixFmt>(PixFormat)} to {Enum.GetName<PixFmt>(dst.PixFormat)}");
+                throw new ArgumentException($"Cannot convert pixels from {Enum.GetName<PixFormat>(PixFormat)} to {Enum.GetName<PixFormat>(dst.PixFormat)}");
 
             for (int y = 0; y < h; y++)
             {
@@ -334,10 +454,10 @@ public class Image
    // For an overview of all intel-based vector/SIMD/"Multimedia" intrinsics, see: https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html
    // Nice: Intel Pentium MMX Campaign TV-Add from 1997: https://www.youtube.com/watch?v=5zyjSBSvqPc
 
-    unsafe public void BltSse(int xSrc, int ySrc, int w, int h, Image dst, int xDst, int yDst)
+    unsafe public void BlitSse(int xSrc, int ySrc, int w, int h, Image dst, int xDst, int yDst)
     {
-        ClipBlt(Width, ref xSrc, dst.Width, ref xDst, ref w);
-        ClipBlt(Height, ref ySrc, dst.Height, ref yDst, ref h);
+        BlitClip(ref xSrc, Width,  ref w, ref xDst, dst.Width);
+        BlitClip(ref ySrc, Height, ref h, ref yDst, dst.Height);
 
         CopyLinePtr? copyLine = null;
 
@@ -354,12 +474,12 @@ public class Image
             {
                 switch (PixFormat)
                 {
-                    case PixFmt.R8_G8_B8:
+                    case PixFormat.R8_G8_B8:
                         switch (dst.PixFormat)
                         {
-                            case PixFmt.A8_R8_G8_B8:
+                            case PixFormat.A8_R8_G8_B8:
                                 break;
-                            case PixFmt.L8:
+                            case PixFormat.I8:
                                 /*
                                 copyLine = (pSrc, iSrc, pDst, iDst, nPixels) =>
                                 {
@@ -376,10 +496,10 @@ public class Image
                                 break;
                         }
                         break;
-                    case PixFmt.A8_R8_G8_B8:
+                    case PixFormat.A8_R8_G8_B8:
                         switch (dst.PixFormat)
                         {
-                            case PixFmt.R8_G8_B8:
+                            case PixFormat.R8_G8_B8:
 
                                 if (Ssse3.IsSupported)
                                 {
@@ -435,15 +555,15 @@ public class Image
                                 }
 
                                 break;
-                            case PixFmt.L8:
+                            case PixFormat.I8:
 
                                 break;
                         }
                         break;
-                    case PixFmt.L8:
+                    case PixFormat.I8:
                         switch (dst.PixFormat)
                         {
-                            case PixFmt.R8_G8_B8:
+                            case PixFormat.R8_G8_B8:
                                 copyLine = (pSrc, iSrc, pDst, iDst, nPixels) =>
                                 {
                                     for (int x = 0; x < nPixels; x++)
@@ -457,7 +577,7 @@ public class Image
                                     }
                                 };
                                 break;
-                            case PixFmt.A8_R8_G8_B8:
+                            case PixFormat.A8_R8_G8_B8:
 
                                 break;
                         }
@@ -467,7 +587,7 @@ public class Image
             }
 
             if (copyLine == null)
-                throw new ArgumentException($"Cannot convert pixels from {Enum.GetName<PixFmt>(PixFormat)} to {Enum.GetName<PixFmt>(dst.PixFormat)}");
+                throw new ArgumentException($"Cannot convert pixels from {Enum.GetName<PixFormat>(PixFormat)} to {Enum.GetName<PixFormat>(dst.PixFormat)}");
 
             for (int y = 0; y < h; y++)
             {
@@ -480,122 +600,4 @@ public class Image
     }
 
     #endregion
-
-    #region ArrayAccess
-    ///////////////////////////////////////////////////////////////////////////
-    // Array access
-    ///////////////////////////////////////////////////////////////////////////
-
-    delegate void CopyLine(byte[] srcPxl, int iSrc, byte[] dstPxl, int iDst, int nPixels);
-
-    public void Blt(int xSrc, int ySrc, int w, int h, Image dst, int xDst, int yDst)
-    {
-        ClipBlt(Width, ref xSrc, dst.Width, ref xDst, ref w);
-        ClipBlt(Height, ref ySrc, dst.Height, ref yDst, ref h);
-
-        CopyLine? copyLine = null;
-
-        if (PixFormat == dst.PixFormat)
-        {
-            copyLine = (srcPxl, iSrc, dstPxl, iDst, nPixels) =>
-            {
-                Array.Copy(srcPxl, iSrc, dstPxl, iDst, nPixels * BytesPerPixel);
-            };
-        }
-        else
-        {
-            switch (PixFormat)
-            {
-                case PixFmt.R8_G8_B8:
-                    switch (dst.PixFormat)
-                    {
-                        case PixFmt.A8_R8_G8_B8:
-
-                            break;
-                        case PixFmt.L8:
-                            copyLine = (srcPxl, iSrc, dstPxl, iDst, nPixels) =>
-                            {
-                                for (int x = 0; x < nPixels; x++)
-                                {
-                                    int iSrcLine = iSrc + x * (BytesPerPixel);
-                                    int col = srcPxl[iSrcLine  ] * 2;
-                                    col +=    srcPxl[iSrcLine+1] * 3;
-                                    col +=    srcPxl[iSrcLine+2];
-                                    col /= 6;
-                                    dstPxl[iDst + x * dst.BytesPerPixel] = (byte) col;
-                                }
-                            };
-                            break;
-                    }
-                    break;
-                case PixFmt.A8_R8_G8_B8:
-                    switch (dst.PixFormat)
-                    {
-                        case PixFmt.R8_G8_B8:
-                            copyLine = (srcPxl, iSrc, dstPxl, iDst, nPixels) =>
-                            {
-                                int nBytesSrc = nPixels * BytesPerPixel;
-                                int iByteSrc = iSrc;
-                                int iByteDst = iDst;
-                                for (int x = 0; x < nPixels; x++)
-                                {
-                                    iByteSrc++;                                 // skip alpha
-                                    dstPxl[iByteDst++] = srcPxl[iByteSrc++];    // copy R
-                                    dstPxl[iByteDst++] = srcPxl[iByteSrc++];    // copy G
-                                    dstPxl[iByteDst++] = srcPxl[iByteSrc++];    // copy B
-                                }
-                            };
-
-                            break;
-                        case PixFmt.L8:
-                            break;
-                    }
-                    break;
-                case PixFmt.L8:
-                    switch (dst.PixFormat)
-                    {
-                        case PixFmt.R8_G8_B8:
-                            copyLine = (srcPxl, iSrc, dstPxl, iDst, nPixels) =>
-                            {
-                                for (int x = 0; x < nPixels; x++)
-                                {
-                                    byte intensity = srcPxl[iSrc + x * BytesPerPixel];
-
-                                    int iDstLine = iDst + x * dst.BytesPerPixel;
-                                    dstPxl[iDstLine  ] = intensity;
-                                    dstPxl[iDstLine+1] = intensity;
-                                    dstPxl[iDstLine+2] = intensity;
-                                }
-                            };
-                            break;
-                        case PixFmt.A8_R8_G8_B8:
-
-                            break;
-                    }
-                    break;
-            }
-
-        }
-
-        if (copyLine == null)
-            throw new ArgumentException($"Cannot convert pixels from {Enum.GetName<PixFmt>(PixFormat)} to {Enum.GetName<PixFmt>(dst.PixFormat)}");
-
-        for (int y = 0; y < h; y++)
-        {
-                int iSrc =  ((ySrc + y) * Width     + xSrc) * BytesPerPixel;
-                int iDst =  ((yDst + y) * dst.Width + xDst) * dst.BytesPerPixel;
-                copyLine(_pixels, iSrc, dst._pixels, iDst, w);
-        }
-    }
-    #endregion
-
-
-    public int BytesPerPixel => PixFormat switch 
-    {
-        PixFmt.R8_G8_B8    => 3,
-        PixFmt.A8_R8_G8_B8 => 4,
-        PixFmt.L8          => 1,        
-        _   => throw new ArgumentException($"Unkown pixel size for format {Enum.GetName<PixFmt>(PixFormat)}.")
-    };
-
 }

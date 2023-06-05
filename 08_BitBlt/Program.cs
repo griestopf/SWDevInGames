@@ -4,6 +4,17 @@ using System.Diagnostics;
 using System.Runtime.Intrinsics;
 using System.Runtime.Intrinsics.X86;
 
+/*
+//RGBA->RGB Conversion Test
+Image hfu_trans_huge = new Image("img/hfu_transparent_huge.png");
+Console.WriteLine($"Pixformatn: {Enum.GetName<PixFormat>(hfu_trans_huge.PixFormat)}");
+
+Image hfu_rgb_huge = new Image(hfu_trans_huge.Width, hfu_trans_huge.Height, PixFormat.R8_G8_B8);
+
+hfu_trans_huge.Blit(0, 0, hfu_rgb_huge.Width, hfu_rgb_huge.Height, hfu_rgb_huge, 0, 0);
+hfu_rgb_huge.SaveAs("img/out/hfu_rgb_huge.jpg");
+*/
+/*
 Image ibau = new Image("img/ibau_gross.jpg");
 Image ibau_sw = new Image(ibau.Width, ibau.Height, PixFormat.I8);
 
@@ -14,7 +25,7 @@ Image ibau_reconverted = new Image(ibau.Width, ibau.Height, PixFormat.R8_G8_B8);
 ibau_sw.Blit(0, 0, ibau.Width, ibau.Height, ibau_reconverted, 0, 0);
 
 ibau_reconverted.SaveAs("img/out/ibau_bw.jpg");
-
+*/
 /*
 // RGB->SW->RGB Test
 Image ibau = new Image("img/ibau_gross.jpg");
@@ -38,7 +49,6 @@ hfu_trans_huge.BlitSse(0, 0, hfu_rgb_huge.Width, hfu_rgb_huge.Height, hfu_rgb_hu
 hfu_rgb_huge.SaveAs("img/out/hfu_rgb_huge.jpg");
 */
 
-/*
 // ARGB to RGB conversion test
 Image hfu_argb = new Image("img/hfu_transparent_huge.png");
 Debug.Assert(hfu_argb.PixFormat == PixFormat.A8_R8_G8_B8);
@@ -89,7 +99,6 @@ for (int i = 0; i < 100; i++)
 Console.WriteLine($"Array Access duration: {msArr/1000.0}s; Pointer Access duration: {msPtr/1000.0}s; SSE Access duration: {msSse/1000.0}s; ");
 
 hfu_rgb_ssewarmup.SaveAs("img/out/hfu_rgb_huge.jpg");
-*/
 
 
 public enum PixFormat

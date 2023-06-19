@@ -9,10 +9,10 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/bin/Debug/net5.0/CalcApp.dll",
-            "args": [],
+            "program": "${workspaceFolder}/bin/Debug/net7.0/CalcApp.dll",
+            "args": ["C:/Users/chris/Documents/_DEV/CourseContents/SWDevInGames/05_Reflection/CalculatorExtendable/CalcAddOn/bin/Debug/net7.0/CalcAddOn.dll"],
             "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
+            "console": "integratedTerminal",
             "stopAtEntry": false
         },
         {

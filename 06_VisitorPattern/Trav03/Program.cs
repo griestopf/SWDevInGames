@@ -50,7 +50,6 @@ public abstract class GraphOb
 {
     public string Name;
     public abstract void Accept(Visitor v);
-
 }
 
 public class Sphere : GraphOb
